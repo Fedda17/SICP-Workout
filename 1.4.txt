@@ -1,0 +1,83 @@
+Procedure:
+(define (square x) (* x x))
+(define (<= a b) (not (> a b)))
+(define (cresc-eq-seq a b c) (and (>= a b) (>= b c)))
+  (define (f a b c) (cond ((>= a b) (+ (square a) (square (cond ((>= c b) c)
+                                               (else b)))))
+                          (else (+ (square b) (square (cond ((>= c a) c) (else a)))))))
+
+
+Conclusione positiva:
+Ho annidato una serie di condizioni in modo da capire quali fossero i due numeri più grandi e ho sfruttato il potere del linguaggio per applicare le operazioni matematiche square e + al
+risultato delle espressioni condizionali annidate. 
+
+
+Ragionamento:
+Il problema è composto da:
+1. Trovare il numero più grande e farlo quadro
+2. Trovare il secondo numero più grande e farlo quadro
+3. Sommarli ed assegnarela procedura a una definizione
+
+Come trovo i due numeri più grandi?
+Credo sia più semplice trovare il numero più piccolo, di conseguenza gli altri 2 sono più grandi, così da coprire pure eventuali uguaglianze tra numeri,
+dato che non è detto che a, b, c differiscano.
+
+Allora trovare il numero più piccolo diventa un caso di il numero non più grande tra a, b e c:
+
+(cond ((not (> c a)) (a))
+		((not (> c b)) (b))
+		(else c))
+		
+--- Testo la procedura
+Esito negativo.
+
+Se 3 <= 1 ritorno 1
+Se 3 <= 2 ritorno 2
+Altrimenti 3 X
+
+(1, 2, 3)
+
+C'è stato un errore di ragionamento: Il numero non più grande non è quello più piccolo. In più la procedura formulata non ha l'esito che mi aspettassi causa malusura degli operatori.
+
+Per facilitarmi con la gestione dell'espressione: (define (>= a b) (not (< a b)))
+Ora siccome devo trovare la sequenza giusta ad ogni caso, per facilitarmi la vita ulteriormente: (define (cresc-eq-seq a b c) (and (>= a b) (>= b c)))
+Ora confrontando a, b, c trovo i due numeri non più piccoli, li quadro e li sommo.
+
+(define (f a b c) (cond ((cresc-eq-seq a b c) (+ (square b) (square c)))
+                        ((cresc-eq-seq c b a) (+ (square b) (square a)))
+                        (else (+ (square a) (square c))))
+
+Siccome l'ambiente non ha la procedura square: (define (square x) (* x x))
+  
+--- Testo la procedura
+Esito negativo.
+
+  Se 1 >= 2 >= 3 ritorno 2^2 + 3^3
+  Se 3 >= 2 >= 1 ritorno 2^2 + 1^1 X
+(1, 2, 3)
+
+  C'è stato un errore di ragionamento: ho usato il segno >=, inoltre questo procedimento mi costringe a controllare tutte le permutazioni tra a, b e c. Devo ritornare sui miei passi...
+
+Come prendo i due numeri più grandi?
+Se seguo il ragionamento di trovare il più piccolo 
+
+  Questa procedura ottiene il più piccolo
+  (define (f a b c) (if (<= a c) a (if (<= b c) b c)))
+  
+Come prendo i rimanenti? Non posso. Quindi non mi rimane altro che scegliere i due più grandi proceduralmente.
+
+  Quindi se a >= b prendo a, se c >= b prendo c
+
+  (define (f a b c) (cond ((>= a b) (+ (square a) (square (cond ((>= c b) c)
+                                               (else b)))))
+                          (else (+ (square b) (square (cond ((>= c a) c) (else a)))))))
+--- Testo la procedura
+  Esito positivo.
+  Se 1 >= 2 ritorno il quadrato di 2 che sommo al quadrato del prossimo numero più grande che è:
+  Se 2 >= 3 ritorno il quadrato di 3 vvv
+
+  (1,2,3)
+
+
+                          ))
+    
