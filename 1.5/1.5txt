@@ -1,0 +1,14 @@
+Ricordo che nel modo applicativo, tutti i valori degli elementi in una combinazioni sono calcolati prima e poi l'operatore applica la procedura, partendo sempre dalla combinazione più interna:
+Seguendo la procedura:
+(define (p) (p))
+
+(define (test x y) 
+  (if (= x 0) 
+      0 
+      y))
+	  
+E chiamandola con (test 0 (p))
+L'espressione evolve in:
+(if (= x 0) 0 y)->(if (proc ug 0 0) 0 (p))->(if (proc ug 0 0) 0 (p)-> così all'infinito finché (p) ha significato nell'ambiente.
+
+Invece passando al modo normale-ordinativo, i valori vengono calcolati solo quando l'operatore nella combinazione a cui appartegono ne ha bisogno, quindi la y non viene mai "considerata" perché l'espressione if presuppone che solo il predicato determina cosa calcolare.
