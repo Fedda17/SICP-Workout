@@ -1,0 +1,47 @@
+Conclusione:
+Mi fermo con lo stipulare che c'è qualcosa di come l'interprete calcola la forma speciale di "if" che fa terminare il processo quando dà true nell'ultima iterazione e invece il cond fa ripetere all'infinito l'ultima iterazione
+fino a che non scopro qualcosa di pertinente leggendo il libro.
+
+Definisco la procedura new-if come un "sostituto" di if e la registro nell'ambiente:
+
+(define (new-if predicate 
+                then-clause 
+                else-clause)
+  (cond ((not predicate) else-clause)
+        (else then-clause)))
+		
+Considero il caso in cui è usata in questa definizione:
+
+(define (sqrt-iter guess x)
+  (new-if (good-enough? guess x)
+          guess
+          (sqrt-iter (improve guess x) x)))
+		  
+		
+Provando a fare una prova con la procedura sqrt, che è ricorsiva, l'interprete non risponde andando in timeout.
+Cosa succede?
+
+Proviamo con una semplice sostituzione---
+(define (sqrt-iter guess x)
+  (cond ((good-enough? guess x) guess)
+          (else  (sqrt-iter (improve guess x) x)))
+		  
+La mia teoria è che ci mette troppo tempo a sostituire la definizione, ma come la testo? Potrei andare a cercare una funzione di libreria che stampi la funzione ad ogni iterazione. Usando la funzione trace che traccia l'evoluzione del processo, noto che non si ferma mai, quindi presuppongo che la mia teoria è sbagliata con il parametro guess che si ferma allo stesso valore corretto.
+Se uso un if normale e ripeto lo stesso esperimento? Noto dei cambiamenti nell'evoluzione del processo, e il procedimento raggiunge una conclusione cambiando il parametro "guess", quindi la mia teoria è sbagliata, devo fare un cambio di ipotesi...
+
+La differenza tra sqrt-iter implementato con new-if e quello implementato con if è che entrambi calcolano il risultato correttamente ma il new-if non fa fermare mai il processo, quindi c'è qualcosa nel new-if che restituisce sempre il sqrt-iter come condizione, forse perché l'else è una condizione che dà sempre true?
+Mi fermo con lo stipulare che c'è qualcosa di come l'interprete calcola la forma speciale di "if" che fa terminare il processo quando dà true nell'ultima iterazione e invece il cond fa ripetere all'infinito l'ultima iterazione
+fino a che non scopro qualcosa di pertinente leggendo il libro.
+
+
+
+Definizione usate:
+
+(define (improve x y)  (average x (/ y x)))
+
+(define (average x y) 
+  (/ (+ x y) 2))
+  
+  (define (good-enough? guess x)
+  (< (abs (- (square guess) x)) 0.001))
+	  
