@@ -6,3 +6,6 @@ risultato delle espressioni condizionali annidate.
 
 1.6 Mi fermo con lo stipulare che c'è qualcosa di come l'interprete calcola la forma speciale di "if" che fa terminare il processo quando dà true nell'ultima iterazione e invece il cond fa ripetere all'infinito l'ultima iterazione
 fino a che non scopro qualcosa di pertinente leggendo il libro.
+
+1.7 Ho notato di come il computer abbia bisogno di sapere, indicato tramite un margine nella procedura, quando è sufficiente fermarsi attraverso una tolleranza stabilita matematicamente partendo dalle premesse dell'esercizio 1.6:
+(- frazione molto piccola + guess) < (improve guess x) < (frazione molto piccola + guess)
