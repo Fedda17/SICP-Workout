@@ -35,7 +35,7 @@ fino a che non scopro qualcosa di pertinente leggendo il libro.
 
   Immagino cosa fa il cond nell'ultima iterazione in Lisp:
     (cond ( (good-enough? 3.354 9) guess)
-        (else (cond ((good-enough? 3 9) 3)
+        (else (cond ((good-enough? 3.000818 9) 3)
           (else  (sqrt-iter (improve 3 9) 9)))))
 
 Ho pensato male, qui il cond con il predicato a true, è una serie di espressioni, ma la serie di espressioni talvolta consiste in cond annidati grazie
@@ -43,7 +43,16 @@ alla ricorsione sulla funzione stessa, quindi è vero che l'ultimo valore nella 
 solo il cond più "annidato", e a causa della natura del cond non può essere il valore dell'intera espressione perché il cond sopra ha come valore (sqrt-iter (improve guess x) guess).
 Quindi l'intreprete non scioglierà mai quest'ultimo passaggio per la natura ricorsiva della procedura.
 
-La mia ipotesi è che l'espressione cond non ritorna il valore 
+Ipotesi sbagliata: facendo un test è chiaro che l'iterazione infinita aggiorna sempre il valore di guess, solo che ad una certa non riesce più a farlo con una precisione, ma comunque ritorna true dopo aver stabilito una certa precisione
+nonostante ritorna true il processo non termina. L'aggiorno dicendo che mantengo il fatto che l'else del penultimo cond annidato viene comunque eseguito
+
+Se uso il cond "direttamente" nella definizione di sqrt-iter:
+(define (sqrt-iter guess x)
+  (cond ((good-enough? guess x)
+          guess)
+          (else (sqrt-iter (improve guess x) x))))
+
+Il processo finisce il compito, quindi da questo deduco che definire la procedura new-if causa il problema che potrebbe dipendere dall'interprete che segue l'ordine di calcolo applicativo.
 
 Definizione usate:
 
