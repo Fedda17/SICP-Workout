@@ -4,8 +4,7 @@ risultato delle espressioni condizionali annidate.
 
 1.4, 1.5: Ragionamenti inclusi nei file.
 
-1.6 Mi fermo con lo stipulare che c'è qualcosa di come l'interprete calcola la forma speciale di "if" che fa terminare il processo quando dà true nell'ultima iterazione e invece il cond fa ripetere all'infinito l'ultima iterazione
-fino a che non scopro qualcosa di pertinente leggendo il libro.
+1.6: L'ordine di calcolo applicativo seguito dall'interprete in Scheme calcola prima le espressioni della combinazione (new-if predicate then-clause else-clause) all'interno della procedura sqrt-iter, il che nasconde la forma speciale che il simbolo if e cond hanno nel linguaggio nelle quali il calcolo di un'espressione è determinato da un predicato.
 
 1.7 Ho notato di come il computer abbia bisogno di sapere, indicato tramite un margine nella procedura, quando è sufficiente fermarsi attraverso una tolleranza stabilita matematicamente partendo dalle premesse dell'esercizio 1.6:
 (- frazione molto piccola + guess) < (improve guess x) < (frazione molto piccola + guess)
