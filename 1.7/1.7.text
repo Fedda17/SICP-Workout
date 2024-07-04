@@ -1,6 +1,6 @@
 Conclusione:
 
-Ho notato di come il computer abbia bisogno di sapere, indicato tramite un margine nella procedura, quando è sufficiente fermarsi
+Ho notato di come il processo del computer abbia bisogno di sapere, indicato tramite un margine nella procedura, quando è sufficiente fermarsi
 attraverso una tolleranza stabilita matematicamente partendo dalle premesse dell'esercizio 1.6:
 
 (- frazione molto piccola + guess) < (improve guess x) < (frazione molto piccola + guess)
