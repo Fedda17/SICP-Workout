@@ -9,6 +9,6 @@ Seguendo la procedura:
 	  
 E chiamandola con (test 0 (p))
 L'espressione evolve in:
-(if (= x 0) 0 y)->(if (proc ug 0 0) 0 (p))->(if (proc ug 0 0) 0 (p)-> così all'infinito finché (p) ha significato nell'ambiente.
+(if (= x 0) 0 y)->(if (proc ug 0 0) 0 (p))->(if (proc ug 0 0) 0 (p)-> così all'infinito perché (p) ha valore nell'ambiente.
 
 Invece passando al modo normale-ordinativo, i valori vengono calcolati solo quando l'operatore nella combinazione a cui appartegono ne ha bisogno, quindi la y non viene mai "considerata" perché l'espressione if presuppone che solo il predicato determina cosa calcolare.
