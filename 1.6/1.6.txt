@@ -1,6 +1,5 @@
 Conclusione:
-Mi fermo con lo stipulare che c'è qualcosa di come l'interprete calcola la forma speciale di "if" che fa terminare il processo quando dà true nell'ultima iterazione e invece il cond fa ripetere all'infinito l'ultima iterazione
-fino a che non scopro qualcosa di pertinente leggendo il libro.
+L'ordine di calcolo applicativo seguito dall'interprete in Scheme calcola prima le espressioni della combinazione (new-if predicate then-clause else-clause) all'interno della procedura sqrt-iter, il che nasconde la forma speciale che il simbolo if e cond hanno nel linguaggio nelle quali il calcolo di un'espressione è determinato da un predicato.
 
 Definisco la procedura new-if come un "sostituto" di if e la registro nell'ambiente:
 
