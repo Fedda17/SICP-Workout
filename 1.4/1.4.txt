@@ -4,4 +4,4 @@
 
 Prima l'interprete risolve l'espressione più annidata che è if...
 Ritorna + o - senza calcolarli (lo farà nell'iterazione successiva), dopodiché rimane (+/- a b) e diventa una combinazione con solo espressioni primitive che hanno valore nell'ambiente
-Poi assegna l'espressione tramite un define al simbolo (a-plus-abs-b a b) e non ritorna nulla perché define è irregolare.
+Poi assegna l'espressione tramite un define al simbolo (a-plus-abs-b a b) e non ritorna nulla perché define è una forma speciale.
