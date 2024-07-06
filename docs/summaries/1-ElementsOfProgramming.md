@@ -46,7 +46,7 @@ Then he evaluates the expression
 
 What behavior will Ben observe with an interpreter that uses applicative-order evaluation? What behavior will he observe with an interpreter that uses normal-order evaluation? Explain your answer.
 ### Resolution
-I tried to get inside the "mind" of the interpreter of Lisp and see how it would compute the a combination in the normal order and applicative order and see how it would cause erratic behavior in the applicative one because it doesn't ignore evaluating an expression (in this case the juggler (p)) in the process.
+I tried to get inside the "mind" of the interpreter of Lisp and see how it would compute the procedure call expression in the normal order and applicative order and see how it would cause erratic behavior in the applicative one because it doesn't ignore evaluating an expression (in this case the juggler (p)) in the process.
 
 ### [Thought Process](../solutions/1-ElementsOfProgramming/1.5.md)
 
