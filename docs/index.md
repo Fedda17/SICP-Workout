@@ -11,6 +11,8 @@ The source code is only compilable with the IDE DrRacket and their extension wil
 
 Here's the host of the book which I'm studying from: [sarabander.github.io/sicp](http://sarabander.github.io/sicp/html/index.xhtml)
 
+In addition to the SICP exercises I'm also doing a course provided by Barkeley university for free! Check it out [here](https://people.eecs.berkeley.edu/~bh/61a-pages/Volume1/CS%2061A%20Course%20Reader,%20Volume%201.html)
+
 ## Summaries...
 Presenting to you the threading I did in order to make sense of the exercises in a portable way
 
