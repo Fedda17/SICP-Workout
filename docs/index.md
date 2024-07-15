@@ -16,4 +16,4 @@ In addition to the SICP exercises I'm also doing a course provided by Barkeley u
 ## Summaries...
 Presenting to you the threading I did in order to make sense of the exercises in a portable way
 
-1.1 Elements of Programming! 
+1.1 [Elements of Programming!](../docs/summaries/1-ElementsOfProgramming.md)

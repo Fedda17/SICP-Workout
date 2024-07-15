@@ -11,9 +11,9 @@ Example:
 
 
 ## First Attempt
-The problem is divided into these steps:
+The problem is divided into these steps:  
 1. Take the first character  
-2. Compare to next character:  
+2. Compare to next character:    
 	if it's equal take the subset sentence - first character and repeat from step 1  
 	if it's not equal move on to the next character with the same set  
 
@@ -109,7 +109,8 @@ I need a procedure that takes a sentence and the character to check and returns 
 	)
 ```
 	
-	Testing with these cases that the exercise gave me I attuned the procedure accordingly in order to make it behave for producing the correct result
+Testing with these cases that the exercise gave me I attuned the procedure accordingly in order to make it behave for producing the correct result
+
 ``` racket
 > (dupls-remove ’(a b c a e d e b))
 (c a d e b)
