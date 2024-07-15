@@ -1,0 +1,16 @@
+(define (contains? sent character-check)
+	(define (iter-sentence-check sent current)
+		(cond 
+			((equal? current character-check) 0)
+			((empty? sent) 1)
+			(else (+ 0 (iter-sentence-check (bl sent) (last sent)) ))))
+	(equal? 0 (iter-sentence-check  sent '())))
+
+	(define (dupls-remove og-sentence)
+		(define (iter-sentence-dupl sent current without-duples) 
+				(cond ((empty? sent) (if (and (contains? without-duples current) (equal? (last og-sentence) current)) without-duples (sentence current without-duples)))
+						((not (contains? without-duples current)) (iter-sentence-dupl (bl sent) (last sent) (sentence current without-duples)))
+						(else (iter-sentence-dupl (bl sent) (last sent) without-duples)))
+						)
+		(iter-sentence-dupl og-sentence '() '())
+	)
