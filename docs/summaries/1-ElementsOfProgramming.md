@@ -105,3 +105,5 @@ The main draw from this exercise it's the importance of breking down the problem
 The first complex exercise I encountered studying the book that helped me to see the problem in solving a set of subproblems in order to tackle more complex compositions of procedural ideas, then I tested the procedures given the samples provided and adjusted it accordingly
 #### [Thought Process](../solutions/1-ElementsOfProgramming/Barkeley-Exercises/remove-duplicates-characters.md)
 #### [Source code](../source_code/1-ElementsOfProgramming/remove_duplicates_characters_procedure.rkt)
+
+### [Checkout the homeworks as well for the first week](../solutions/1-ElementsOfProgramming/Barkeley-Exercises/homework-week1.md)
