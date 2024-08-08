@@ -67,9 +67,54 @@ Using recursion and knowledge about higher order procedures, conjure a procedure
 I liked the structured approach that this exercise required out of me and it was an opportunity to see the consequences of my reasoning about new concepts through the bitter end.
 ### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.37.md)
 
+## 1.38
+
 ### Description
 Using the cont-frac procedure, I had to conjure a procedure for finding the euler number.
 ### Resolution
 This was tough, because I had to find a rule for estimating the correct value of the denominator based on the position in the series and I had to modify the previously defined cont-frac procedure because it wasn't correct in how the steps were ordered.
 ### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.38.md)
 ### [Source Code](../source_code/3-HigherOrderProc/euler-cont-frac.rkt)
+
+
+## 1.39
+
+### Description
+Continued fraction to find the tangent of a number in radians.
+### Resolution
+All the process was already laid out thanks to the previous exercises and the description found in the exercise text.
+### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.39.md)
+### [Source Code](../source_code/3-HigherOrderProc/tangent-cont-frac.rkt)
+
+
+## 1.40
+
+### Description
+Finding the zeros of a cubic equation using the newthon's method
+### Resolution
+All the process was already laid out thanks to the previous exercises and the description found in the exercise text. Experimenting with an argument that has range a function in the main procedure.
+### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.40.md)
+### [Source Code](../source_code/3-HigherOrderProc/cubic.rkt)
+
+## 1.41
+
+### Description
+Exercise which enables to start thinking in terms of composition for higher order procedure
+### Resolution
+It was hard to figure out how the interpreter expands the process so I had to trust my intuition built upon previous execises and managed to figure out the development thanks to an illustration. This contains the solution to 1.42 as well
+### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.41.md)
+
+
+## 1.43
+### Description
+Procedure that applies the composition of a given function a specified number of times
+### Resolution
+Very useful exercise that let me think in terms of output when the range is a procedure that I have to manipulate recursively
+### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.43.md)
+
+## 1.44
+### Description
+Smoothing a function in order to get a better estimation of the value at a point using the repeated procedure built in the previous exercise
+### Resolution
+I see some utility of the function repeated that it's fundamental in order to understand how to build useful abstraction that enable complexity with higher order procedures
+### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.43.md)
