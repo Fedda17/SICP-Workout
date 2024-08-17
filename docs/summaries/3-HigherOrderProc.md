@@ -1,4 +1,4 @@
-# Further Abstractions with Higher Order Procedures
+# 1.3 Further Abstractions with Higher Order Procedures
 
 ## 1.29
 
@@ -117,4 +117,27 @@ Very useful exercise that let me think in terms of output when the range is a pr
 Smoothing a function in order to get a better estimation of the value at a point using the repeated procedure built in the previous exercise
 ### Resolution
 I see some utility of the function repeated that it's fundamental in order to understand how to build useful abstraction that enable complexity with higher order procedures
-### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.43.md)
+### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.44.md)
+
+## 1.45
+### Description
+N-th root procedure using a criteria for getting approximations with repetition of the average damping procedure as the order of rooting increased.
+### Resolution
+After testing what was the hard wall for an average damping with progressive order of rooting, I tried to derive a rule that binds the order of root n and the number of average damping, then I tested and traced my steps back in order to make some revisions in the individual sub procedures
+### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.45.md)
+### [Source Code](../source_code/3-HigherOrderProc/nth-root.rkt)
+
+## 1.46
+### Description
+Rewriting of previously defined procedures that used the concept of iterative improving with a method that encapsulates this concept called iterative-improvement
+### Resolution
+Combined all the previously verified knowledge in these recent exercise I came up with a quick solution
+### [Thought Process](../solutions/3-HigherOrderProc/SICP-Exercises/1.46.md)
+
+
+## Barkeley Exercises
+
+### Resolution
+I'm glad I experimented more with lambda expressions
+### [Lab](../solutions/3-HigherOrderProc/Barkeley-Exercises/lab-week2.md)
+### [homework](../solutions/3-HigherOrderProc/Barkeley-Exercises/hw-week2.md)
