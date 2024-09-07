@@ -16,3 +16,75 @@ I transform the predicate of the definition as a formal parameter and I call it 
 After adjusting some lexical errors this procedure does what the exercise required.
 Not, to make a procedure that sums the square of the prime numbers between a and b, I have to come up with
 a procedure that says when a number is prime, this is in an exercise in 1.2 chapter of the book so I'll pass for now
+
+Part 2:
+
+Importing the prime? procedure:
+(define (prime? n)
+  (= n (smallest-divisor n)))
+
+(define (smallest-divisor n)
+  (find-divisor n 2))
+
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) 
+         n)
+        ((divides? test-divisor n) 
+         test-divisor)
+        (else (find-divisor 
+               n 
+               (+ test-divisor 1)))))
+
+(define (divides? a b)
+  (= (remainder b a) 0))
+
+and passing it as a predicate to filtered-accumulate:
+(define (square x) (* x x))
+(define (sum-of-squares-prime a b)
+	(filtered-accumulate (lambda (x y) (and)) 0 + square a (lambda (x) (+ x 1)) b)
+)
+
+This new specification required a revised version of the filtered-accumulate procedure that 
+does what actually the exercise says:
+
+(define (filtered-accumulate filter null-value combiner term a next b)
+	(if (> a b)
+		null-value 
+		(combiner (if (filter a) (term a) null-value) (filtered-accumulate filter null-value combiner term (next a) next b))))
+
+Now the procedure works as expected.
+
+Part 3:
+Filter all the numbers a < n such that GCD(a, n) = 1
+Procedure for gcd:
+(define (gcd a b)
+  (if (= b 0)
+      a
+      (gcd b (remainder a b))))
+
+(define (product-of-rel-primes n)
+	(filtered-accumulate (lambda (i) (= (gcd i n) 1) ) 1 * (lambda (x) x ) 1 (lambda (x) (+ x 1)) n))
+
+> (product-of-rel-primes 10)
+>(|...om an unsaved editor:1133:22| 1)
+<#t
+>(|...om an unsaved editor:1133:22| 2)
+<#f
+>(|...om an unsaved editor:1133:22| 3)
+<#t
+>(|...om an unsaved editor:1133:22| 4)
+<#f
+>(|...om an unsaved editor:1133:22| 5)
+<#f
+>(|...om an unsaved editor:1133:22| 6)
+<#f
+>(|...om an unsaved editor:1133:22| 7)
+<#t
+>(|...om an unsaved editor:1133:22| 8)
+<#f
+>(|...om an unsaved editor:1133:22| 9)
+<#t
+>(|...om an unsaved editor:1133:22| 10)
+<#f
+
+By looking at the stack trace, this procedure works as expected.

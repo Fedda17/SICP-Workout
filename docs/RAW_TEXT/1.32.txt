@@ -34,5 +34,12 @@ With this definition, I'll rewrite both sum and product simply as:
 	
 --- Test POSITIVE
 
+Part 2:
+Turn accumulate procedure into a procedure which generates a iterative process:
 
-
+(define (accumulate null-value combiner term a next b)
+  (define (accumulate-iter result a)
+	  (if (> a b) 
+		  result 
+      (accumulate-iter (combiner result (term a))  (next a))))
+      (accumulate-iter null-value a))

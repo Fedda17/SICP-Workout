@@ -46,5 +46,17 @@ This procedure doesn't work because k affects how the series progresses without 
 										(else 1))))
 	(if (< x 0) -1 (* 4.0 (/ (product next-numerator  1 (lambda (k) (+ k 1)) n) (product next-denominator 1 (lambda (k) (+ k 1)) n)))))
 	
-	I made a trick here where taking the consideration that both the numerator and the denominator follow a certain pattern, that is, numerator is always increasingly even and denominator is always increasingly odd,
+	I made a trick here when taking the consideration that both the numerator and the denominator follow a certain pattern, that is, numerator is always increasingly even and denominator is always increasingly odd,
 	I take the position of k in the series and add what's remaining to obtain the next in the series.
+
+
+Part 2:
+Turning the product procedure into an iterative process:
+
+(define (product result term a next b)
+ 	 (if (> a b)
+      result
+         (product (* result (term a)) term (next a) next b)))
+		 
+
+

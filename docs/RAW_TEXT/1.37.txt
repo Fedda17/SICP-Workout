@@ -75,3 +75,45 @@ was unnecessary convoluted and by combining steps with a lambda I think it jumpe
 )
 
 This procedure is enough for finding 1/phi correct to the 4th decimal place with k = 10
+
+
+Rewriting the cont-frac procedure in order to make it generate an iterative process:
+
+This is the revised version of cont-frac:
+(define (cont-frac num den n)
+	(define (cont-frac-iter k)
+		(cond ((= k n) (/ (num k) (den k)))
+			(else (/ (num k) (+ (den k) (cont-frac-iter (+ k 1)))
+					  )
+			)
+		)
+	) 
+	(cont-frac-iter 1))
+
+
+Transformation:
+This is the revised version of cont-frac:
+(define (cont-frac num den n)
+	(define (cont-frac-iter k result)
+		(cond ((= k n) result)
+			(else (cont-frac-iter (+ k 1) (/ (num k) (+ (den k) result))))
+					  )
+			)
+	(cont-frac-iter 1 (/ (num n) (den n)) ))
+Stack-trace:
+
+> (cont-frac (lambda (i) 1.0)
+           (lambda (i) 1.0)
+           4)
+0.6000000000000001
+> (cont-frac (lambda (i) 1.0)
+           (lambda (i) 1.0)
+           10)
+0.6179775280898876
+> (cont-frac (lambda (i) 1.0)
+           (lambda (i) 1.0)
+           20)
+0.6180339850173578
+> 
+
+This procedure works!

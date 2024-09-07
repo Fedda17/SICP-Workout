@@ -1,0 +1,23 @@
+Rewriting the sum procedure in order to make it generate a iterative process using this template:
+
+(define (sum term a next b)
+  (define (iter a result)
+    (if ⟨??⟩
+        ⟨??⟩
+        (iter ⟨??⟩ ⟨??⟩)))
+  (iter ⟨??⟩ ⟨??⟩))
+
+  Transformation:
+  (define (sum term a next b)
+  (define (iter a result)
+    (if (> a b)
+        result
+        (iter (next a) (+ result (term a)))))
+  (iter a 0))
+
+  TEST ---
+
+(sum (lambda (x) x) 1 (lambda (x) (+ x 1)) 10)
+55
+
+Works as expected.
