@@ -1,0 +1,36 @@
+Another exercise which requires the use of the function cont-frac:
+
+(define (cont-frac num den n)
+	(define (cont-frac-iter k)
+		(cond ((= k n) (/ (num k) (den k)))
+			(else (/ (num k) (+ (den k) (cont-frac-iter (+ k 1)))
+					  )
+			)
+		)
+	) 
+	(cont-frac-iter 1))
+	
+I have to use the cont-frac function to make a function that gives the tangent of a number using the Lambert procedure (that's derived from the continued fraction)
+
+(define (square x) (* x x))
+
+(define (tan-cf x k)	
+	(cont-frac 
+		(lambda (i) 
+			(if (= i 1) x (- (square x)))
+		)
+		(lambda (i) 
+			(+ i (- i 1))
+		)
+		k
+	)
+)
+
+--TEST (using a calculator...)
+
+The domain of the function is radiants, the exercise doesn't specify it, but given the input 5 the function computes a good approximation:
+-3.3805150062465867
+
+actual value: -3.38051500625
+
+for k=100

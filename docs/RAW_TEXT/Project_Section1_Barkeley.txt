@@ -1,0 +1,296 @@
+Blackjack project.
+Rules of the game.
+Two Players wich purpose is getting at 21 through a set of cards
+Players are dealer and costumer
+For programming purpose, the cards are made by words
+Jack = j
+King = k
+Ace = a
+Queen = q
+Spades = s
+Hearts = h
+Clubs = c
+Diamonds = d
+
+Picture cards = 10p
+Ace = 1p or 11p
+
+Cards are reshuffled at each round
+
+At each round at the start the players are dealt with two cards and one of the dealer's is facing up
+The dealer's rules are:
+if cards < 17 takes otherwise stops
+The costumer plays before the dealer.
+If costumer cards > 21 -> immediate lost
+If costumer's cards = dealer's cards -> tie
+
+Costumer's strategy = f(hand-so-far, dealers-faceup-card) -> true or false, instruct whether to take another card
+
+
+hand-so-far = sentence of words
+dealers-faceup-card = words
+
+
+library function: twenty-one, if I feed it "strategy" it plays a game with randomly shuffled cards and returns 0 or 1 or -1
+if 1 the costumer won
+if 0 tie
+if -1 costumer lost 
+
+My purpose of this program is to do some testing for to-do procedures indicated in the text using trace output and convince the reader that it works
+
+Let's start by importing the library function to racket 
+
+I have to define a procedure best-total with input a sentence of cards and output the total points
+I should return the closest number less or equal to 21 when ace is in the sentence
+
+Writing and test of the procedure:
+
+procedure that returns a sentence of points ordered.
+sum ordered points accounting for ace value
+
+
+(define (best-total hand)
+	(define (points-association card) 
+			(let ((card-rank (bl card)))
+				(cond ((and (number? card-rank) (< card-rank 11)) card-rank)
+							((or (equal? card-rank 'J) (equal? card-rank 'Q) (equal? card-rank 'K)) 10)
+							((equal? card-rank 'A) 11)
+				)
+			)
+	)
+
+	(define (sum-best-total ordered-points total) 
+		(define MAX-POINTS 21)
+		 (cond
+						((empty? ordered-points) total)
+						((and (= 11 (first ordered-points)) (> total (- MAX-POINTS 11))) (sum-best-total (bf ordered-points) (+ total 1)))
+						(else (sum-best-total (bf ordered-points) (+ total (first ordered-points))))
+		
+		  )
+	)
+
+	(define (iter-points hand)
+		(cond ((empty? hand) '())
+			  (else (sentence (points-association (first hand)) (iter-points (bf hand))))
+		) 
+	)
+
+	(sum-best-total (sort (iter-points hand) <) 0)
+)
+	
+I tried calling this definition with the following arguments:
+
+> (best-total '(ad 8s 5h))
+14
+>  (best-total '(ad as 9h))
+21
+>  (best-total '(ad as ac))
+13
+>  (best-total ’(9s as 9h))
+. . ’: undefined;
+ cannot reference an identifier before its definition
+>  (best-total '(9s as 9h))
+19
+>  (best-total '(js as 9h))
+20
+> (best-total '(qs as 9h))
+20
+> (best-total '(ks as 9h))
+20
+> (best-total '(ms as 9h))
+. . Argument to SENTENCE not a word or sentence: #<void>
+
+Which indicates that the behaviour of the procedure is as expected for the exercise
+
+
+Part 2 I have to write a procedure that does the same but for the dealer, I expect to reuse a lot of code:
+(define (stop-at-17 customer-hand-so-far dealer-card-facing-up)
+	(< (best-total  customer-hand-so-far) 17)
+) 
+
+> (stop-at-17 '(9s 8h as))
+#f
+> (stop-at-17 '(8s 8h as))
+#f
+> (stop-at-17 '(7s 8h as))
+#t
+> (stop-at-17 '(9s ah as))
+#f
+
+This stack should provide enough evidence that the procedure works, if there are any bugs anyway, the best-total and stop-at-17 definitions become
+faulty as a consequence because they rely on the same definitions.
+
+Now for play-n:
+
+(define (play-n strategy n)
+		(if (> n 0) (+ (twenty-one strategy) (play-n strategy (- n 1))) 0)) 
+	
+For the dealer sensitive strategy, there are two cases:
+I return true when the dealer facing up card is 7 or 8 or 9 or 10 or ace or picture and the customer has less than 17
+I return false when the dealer has 2 or 3 or 4 or 5 or 6 and the customer has less than 12
+
+(define (dealer-sensitive customer-hand-so-far dealer-card-facing-up)
+		(cond ((> (best-total (sentence dealer-card-facing-up '())) 6) (< (best-total customer-hand-so-far) 17))
+				(else (< (best-total customer-hand-so-far) 12)))
+)
+
+The stack trace provides:
+(play-n dealer-sensitive 5)
+>(dealer-sensitive '("AC" "7S") "KS") this is as expected
+<#f
+>(dealer-sensitive '("5S" "KS") "QC") this is as expected
+<#t
+>(dealer-sensitive '("5S" "KS" "3D") "QC") this is as expected
+<#f
+>(dealer-sensitive '("10H" "JD") "KS") this is as expected
+<#f
+>(dealer-sensitive '("8D" "6H") "QC") this is as expected
+<#t
+>(dealer-sensitive '("KH" "QC") "8D") this is as expected
+<#f
+-2
+
+For stopping at strategy, should be pretty straightforward:
+(define (stop-at n)
+	(trace-lambda (customer-hand-so-far dealer-card-facing-up)
+		(< (best-total  customer-hand-so-far) n))
+ )
+ 
+ Let's test it:
+ 
+ > (play-n (stop-at 18) 1)
+>(play-n #<procedure> 1)
+> (twenty-one #<procedure>)
+> >(stop-at '("KS" "QC") "5D")
+< <#f
+< 1
+> (play-n #<procedure> 0)
+< 0
+<1
+1
+> (play-n (stop-at 18) 1)
+>(play-n #<procedure> 1)
+> (twenty-one #<procedure>)
+> >(stop-at '("9S" "AC") "4D")
+< <#f
+< 1
+> (play-n #<procedure> 0)
+< 0
+<1
+1
+> (play-n (stop-at 18) 1)
+>(play-n #<procedure> 1)
+> (twenty-one #<procedure>)
+> >(stop-at '("7S" "AD") "3C")
+< <#f
+< -1
+> (play-n #<procedure> 0)
+< 0
+<-1
+
+> > >(play-n #<procedure> 1)
+> > > (twenty-one #<procedure>)
+> > > >(stop-at '("JD" "5H") "8S")
+< < < <#t
+< < < -1
+> > > (play-n #<procedure> 0)
+< < < 0
+< < <-1
+< < 0
+< <-1
+< 0
+<-1
+
+By the stack it works as expected.
+
+Now for the valentine strategy:
+(define (valentine customer-hand-so-far dealer-card-facing-up)
+	(trace-define (contains-hearts? hand) 
+		(let ((suit-card (lambda (card) (last card))))
+			(cond
+				((empty? hand) #f)
+				((equal? (suit-card (first hand)) 'H) #t)
+				(else (contains-hearts? (bf hand))))
+		))
+	(let ((aggressiveness (stop-at 19))
+		  (normal (stop-at 17))) 
+		((if (contains-hearts? customer-hand-so-far) aggressiveness 
+											         normal) customer-hand-so-far '()))
+)
+
+Now let's test it:
+
+>(play-n #<procedure:valentine> 1)
+> (twenty-one #<procedure:valentine>)
+> >(contains-hearts? '("KC" "QH"))
+> >(contains-hearts? '("QH"))
+< <#t
+> >(stop-at '("KC" "QH") '())
+< <#f
+< 0
+> (play-n #<procedure:valentine> 0)
+< 0
+<0
+
+Works as expected
+
+>(play-n #<procedure:valentine> 1)
+> (twenty-one #<procedure:valentine>)
+> >(contains-hearts? '("KC" "QH"))
+> >(contains-hearts? '("QH"))
+< <#t
+> >(stop-at '("KC" "QH") '())
+< <#f
+< 0
+> (play-n #<procedure:valentine> 0)
+< 0
+<0
+0
+> (play-n valentine 1)
+>(play-n #<procedure:valentine> 1)
+> (twenty-one #<procedure:valentine>)
+> >(contains-hearts? '("2D" "AH"))
+> >(contains-hearts? '("AH"))
+< <#t
+> >(stop-at '("2D" "AH") '())
+< <#t
+> >(contains-hearts? '("2D" "AH" "2H"))
+> >(contains-hearts? '("AH" "2H"))
+< <#t
+> >(stop-at '("2D" "AH" "2H") '())
+< <#t
+> >(contains-hearts? '("2D" "AH" "2H" "JD"))
+> >(contains-hearts? '("AH" "2H" "JD"))
+< <#t
+> >(stop-at '("2D" "AH" "2H" "JD") '())
+< <#t
+> >(contains-hearts? '("2D" "AH" "2H" "JD" "5S"))
+> >(contains-hearts? '("AH" "2H" "JD" "5S"))
+< <#t
+> >(stop-at '("2D" "AH" "2H" "JD" "5S") '())
+< <#f
+< -1
+> (play-n #<procedure:valentine> 0)
+< 0
+<-1
+-1
+
+Works as expected. It added cards because the second card the customer got was Ace of Hearts, this made the strategy become stop at 19, so once the points were above it, the customer stopped asking for cards.
+
+>(play-n #<procedure:valentine> 1)
+> (twenty-one #<procedure:valentine>)
+> >(contains-hearts? '("AC" "10S"))
+> >(contains-hearts? '("10S"))
+> >(contains-hearts? '())
+< <#f
+> >(stop-at '("AC" "10S") '())
+< <#f
+< 1
+> (play-n #<procedure:valentine> 0)
+< 0
+<1
+1
+
+Works as expected, we didn't got hearts this time and the strategy became stop at 17, and the customer stopped because he got 21
+
+

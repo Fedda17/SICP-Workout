@@ -1,0 +1,59 @@
+I need to use the  current-inexact-milliseconds in Scheme to test the algorithm efficiency of a procedure that search for prime numbers in a range
+which will be mutually defined by these ones:
+
+(define square (lambda (x) (* x x)))
+(define (smallest-divisor n)
+  (find-divisor n 2))
+
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) 
+         n)
+        ((divides? test-divisor n) 
+         test-divisor)
+        (else (find-divisor 
+               n 
+               (+ test-divisor 1)))))
+
+(define (divides? a b)
+  (= (remainder b a) 0))
+
+(define (timed-prime-test n)
+  (newline)
+  (display n)
+  (start-prime-test n (current-inexact-milliseconds)))
+
+(define (start-prime-test n start-time)
+  (if (prime? n)
+      (report-prime (- (current-inexact-milliseconds) 
+                       start-time)) (display " NO")))
+
+(define (report-prime elapsed-time)
+  (display " *** ")
+  (display elapsed-time))
+
+(define (prime? n)
+  (= n (smallest-divisor n)))
+ 
+ 
+Pick a specific range and consider only odd numbers:
+
+(define (prime-range-test x y)
+	(define (next-odd x)
+		(if (even? x) (+ x 1) (+ x 2))
+	)
+	(cond ((> x y)
+			(newline)
+			(display "END"))
+			(else (timed-prime-test x)
+				  (prime-range-test (next-odd x) y)))
+)
+
+
+Does testing primes around 10000 takes sqrt(10) time longer than testing aroung 1000?
+It does seems so by checking by calculator, but the time is not always the same at each iteration because of some noise
+Now let's see how 10000 and 100000 compare
+It seems consistent with the prediction because n increased by 10 times
+Now for 100000 and 1000000
+It stays consistent so the prediction that the steps required for the computations are proportional with
+the size of the problem is true.
+

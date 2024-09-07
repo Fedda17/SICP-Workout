@@ -1,0 +1,32 @@
+This exercise requires to build a procedure that computes exponentation in an iterative way, the book reports the recursive way as follows:
+
+(define square (lambda (x) (* x x)))
+
+(define (fast-expt b n)
+  (cond ((= n 0) 
+         1)
+        ((even? n) 
+         (square (fast-expt b (/ n 2))))
+        (else 
+         (* b (fast-expt b (- n 1))))))
+		 
+The exercise says to use these two hints:
+
+use a state variable a that saves the result of the moltiplication
+and the observation that (b^n/2)^2=(b^2)^(n/2)
+
+a at the start is 1
+
+the rule for the evolution of the process can be:
+
+a <- ab^k
+k<- k/2 if even, else k - 1
+
+(define (fast-expt b n)
+	(define (iter-expt a b k)
+			(cond 
+				((= k 0) a)
+				((even? k) (iter-expt a (square b) (/ k 2)))
+				(else (iter-expt (* a b) b (- k 1))))
+	)
+(iter-expt 1 b n))

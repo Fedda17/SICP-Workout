@@ -1,0 +1,17 @@
+This exercise tells me that I have to write first a procedure that computes a function f with a recursive process:
+
+f is defined by
+if n < 3; f(n) = n
+if n >= 3; f(n) = f (n - 1) + 2f(n - 2) + 3f(n - 3)
+
+the most straightforward approach will generate first a tree recursive procedure
+
+
+
+(define (f n) (if (< n 3) n (+ 
+								(f (- n 1))
+								(* 2 (f (- n 2)))
+								(* 3 (f (- n 3)))
+							)
+				)
+)

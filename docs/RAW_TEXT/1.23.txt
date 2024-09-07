@@ -1,0 +1,56 @@
+This exercise asks me to put some improvements to the smallest-divisor procedure to decrease the number of checks
+and the number which it will check will be always odd apart from 2
+
+this is what they ask me:
+
+(define (next divisor)
+	(if (= divisor 2) 3 (+ divisor 2)))
+	
+(define square (lambda (x) (* x x)))
+(define (smallest-divisor n)
+  (find-divisor n 2))
+
+
+(define (timed-prime-test n)
+  (newline)
+  (display n)
+  (start-prime-test n (current-inexact-milliseconds)))
+
+(define (start-prime-test n start-time)
+  (if (prime? n)
+      (report-prime (- (current-inexact-milliseconds) 
+                       start-time)) (display " NO")))
+
+(define (report-prime elapsed-time)
+  (display " *** ")
+  (display elapsed-time))
+	
+let's put in place this definition in the smallest-divisor procedure:
+
+(define square (lambda (x) (* x x)))
+(define (smallest-divisor n)
+  (find-divisor n 2))
+
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) 
+         n)
+        ((divides? test-divisor n) 
+         test-divisor)
+        (else (find-divisor 
+               n 
+               (next test-divisor)))))
+
+(define (divides? a b)
+  (= (remainder b a) 0))
+
+Let's see if the prediction that this halves the runtime is true:
+
+for 1000 and 10000?
+the ratio is 1.5 for 1000
+the ratio is 1.41 for 10000 with the assumption that the reduction is by sqrt(2)
+the ratio is still 1.41 for 100000
+The prediction still holds true for 1000000
+
+I must explain why the ratio is different from two
+It's true that the size of the problem is halved, but since the order of growth of the algorithm is sqrt(n) that means that 
+runtime will decrease by sqrt(2) because theta of sqrt(n/2), same as theta of sqrt(n*10) 

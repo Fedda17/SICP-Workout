@@ -1,0 +1,66 @@
+The exercise ask me to expand on this procedure:
+
+(define (cont-frac num den n)
+	(define (cont-frac-iter k)
+		(cond ((= k n) (/ (num k) (den k)))
+			(else (/ (num k) (+ (den k) (cont-frac-iter (+ k 1)))
+					  )
+			)
+		)
+	) 
+	(cont-frac-iter 1))
+
+to find the number e - 2 (e is Euler's number) 
+
+The description tells that Ni must be always 1 and Di follows a precise rule:
+Di -> 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8, 1, 1, 10...
+
+what's the relationship between k and D(k) here?
+
+let's say k starts with 1...
+D(1) = 1
+D(2) = 2
+D(3) = 1
+D(4) = 1
+D(5) = 4
+... the next even number is at D(next even number - 2)
+There's a pattern that tells me that in order to find when D(i) is not 1, take k, if it's equal to next even + c where c is a counter that accounts the number of even numbers I found in order starting from 0, then D(k) = next even.
+
+How do I find c given next-even and k though?
+Let's see first if lambda accepts a let expression inside. Yes it can!
+I made this stupid test: 
+(lambda (i) (let ((c 1)) (+ c i)))
+#<procedure>
+
+So now that I found that I create local variables inside a lambda, how do I find the value of c for every iteration? While taking a break I found something interesting about the sequence:
+Take D(k) where is even, then k/3 is something like c.666666... so given this statement, I choose a tolerance for the decimal numbers and pick the integer part of the k/3 that respect the tolerance, 
+given that in Lisp procedures are first class status, I can even assign the tolerance as a predicate to a local variable binded by let:
+
+But first, I also need a procedure that take the decimal part of a number and the integer part...
+
+(define (integer-of x) (if (and (< 1 (/ x 10)) (> 0 (/ x 10))) (floor x) (integer-of (/ x 10)))) this works if x < 10 and x > 0, in order to account for the size of the number, I need a counter that accounts for the number of iterations
+and give as an output the floored number multiplied by 10^n_of_iteration
+
+or I can just use the floor procedure after all...
+
+(define (tolerance k) (< (abs (- (-  (/ k 3) (floor (/ k 3))) 0.6666666665)) 0.0000000002))
+(lambda (k) (let ((tolerance (< (- (- (floor ((/ k 3))) (/ k 3)) 0.66666) 0.000001) ((let ((c 1)) (+ c i)))))
+
+This is a procedure that after testing it with the interpreter is enough to give a correct estimation of the right value of D(c) = even number, but after watching a video I know the remainder procedure that
+does what I want with fewer stresses. So a procedure of tolerance is a predicate that:
+
+(define (even-point? k) (= 2 (remainder k 3)))
+I renamed the procedure even-point? because it losed the nuances of the previous one, maybe I should always have called it so because is more in scope with the method I want to chase.
+
+So, to go back to the task assigned by the exercise:
+I'll transform it to an exercise to find the euler number (just give it a + 2)
+
+(define (euler-number-by-cont-frac k) 
+	(define (even-point? k) (= 2 (remainder k 3)))
+	(+ 2 (cont-frac (lambda (i) 1.0) (lambda (i) (if (even-point? i) (* (ceiling (/ i 3)) 2) 1 )) k))
+)
+
+Why ceiling? because i / 3 gives the progressive number in the sequence of the even found in D(k) and I can't start with 0, let's test this procedure.
+
+--- TEST NEGATIVE
+the procedure fluctuates in the output in a weird manned and doesn't converge to e as I make k bigger

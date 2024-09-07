@@ -1,0 +1,13 @@
+This exercise asks me to compute moltiplication using a process that evolves in logarithmic time which is similar to fast-expt, so reporting what I built in the previous exercise:
+
+(define (fast-molt n m)
+	(define (iter-molt base n m)
+			(cond 
+				((= m 0) base)
+				((even? m) (iter-molt base (+ n n) (/ m 2)))
+				(else (iter-molt (+ base n) n (- m 1))))
+	)
+(iter-molt 0 n m))
+
+
+This solves exercise 1.18 as well

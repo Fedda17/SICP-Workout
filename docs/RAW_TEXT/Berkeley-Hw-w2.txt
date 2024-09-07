@@ -1,0 +1,61 @@
+Week 2 Homework:
+
+Rewriting the square procedure described on the paper in a more compact manner
+
+(define (squares sen)
+	(if (empty? sen) 
+		'() 
+		(sentence (square (first sen)) (squares (bf sen))))
+)
+
+
+to generalize this pattern with a higher order procedure, consider the procedure every with domain the procedure which applies a transformation and the sentence which I have to manipulate on:
+
+(define (every transform sent)
+	(if (empty? sent) 
+		'() 
+		(sentence (transform (first sent)) (every transform (bf sent)))) 
+)
+
+
+
+This exercise requires to find a way to do recursive procedures without define
+The procedure for computing square without define is:
+
+((lambda (a b)
+	((lambda (square)
+		(+ (square a) (square b)))
+			(lambda (x) (* x x))))
+3 4)
+
+
+which I can organize with a let form in:
+
+(let ((a 3)
+	  (b 4))
+	(let ((square (lambda (x) (* x x))))
+		(+ (square a) (square b))))
+		
+		
+How can I make an expression like this recursive? 
+
+This is a simple definition of a recursive procedure with using define:
+
+(define (fact n)
+	(if (= n 0)
+	1
+	(* n (fact (- n 1)))))
+	
+I must save the name of the procedure in a formal parameter and implying that it calls itself...
+
+
+(let ((n 6)) 
+	(let ((fact (lambda (next-call x) 
+							(if (= x 0) 1 
+								(* x (next-call next-call (- x 1)))
+							)
+				)
+		  ))
+	(fact fact n)))
+	
+THIS WORKS!!!

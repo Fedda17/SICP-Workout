@@ -1,0 +1,28 @@
+Exercise 1.43 requires to write a higher order procedure that returns a procedure which is a composition of a procedure applied n times
+
+(define (repeated f n)	(if (= n 0) (lambda (x) x) (repeated f (compose f f) (- n 1))))) 
+This procedure doesn't work because it doesn't apply the accumulted composition at the end.
+
+(define (repeated f n)	(if (= n 0) (lambda (x) (f x)) (repeated (lambda (x) (f (f x))) (- n 1)))) 
+
+this doesn't work because it doubles the number of applications at each iteration.
+
+(define (repeated f n)	(if (= n 1) (lambda (x) (f x)) (repeated (lambda (x) (f (f x))) (- n 1)))) 
+This does exactly what the exercise wants, it's natural that when n = 1 the function is applied only once.
+The exercise suggests to use the compose function but I used directly the lambda value of that function, but if I want to make the intention more clear:
+
+(define (compose f g) (lambda (x) (f (g x))))
+(define (repeated f n) 	(if (= n 1) (lambda (x) (f x)) (repeated (compose f f) (- n 1)))) 
+
+And this exercise is cleared.
+
+
+Revision of the exercise:
+
+
+After testing the procedure with successive exercise I realized that the previous definition was faulty because it performed eccessive applications of the argument procedure. This makes more sense:
+
+
+(define (repeated f n)	(if (= n 0) (lambda (x) x) (compose f (repeated f (- n 1))))) 
+
+Chains. the composition, but doesn't aggregate them by revaluating the f argument with the previous composition.
