@@ -78,44 +78,10 @@ sum ordered points accounting for ace value
 	(sum-best-total (sort (iter-points hand) <) 0)
 )
 	
-I tried calling this definition with the following arguments:
-
-> (best-total '(ad 8s 5h))
-14
->  (best-total '(ad as 9h))
-21
->  (best-total '(ad as ac))
-13
->  (best-total ’(9s as 9h))
-. . ’: undefined;
- cannot reference an identifier before its definition
->  (best-total '(9s as 9h))
-19
->  (best-total '(js as 9h))
-20
-> (best-total '(qs as 9h))
-20
-> (best-total '(ks as 9h))
-20
-> (best-total '(ms as 9h))
-. . Argument to SENTENCE not a word or sentence: #<void>
-
-Which indicates that the behaviour of the procedure is as expected for the exercise
-
-
 Part 2 I have to write a procedure that does the same but for the dealer, I expect to reuse a lot of code:
 (define (stop-at-17 customer-hand-so-far dealer-card-facing-up)
 	(< (best-total  customer-hand-so-far) 17)
 ) 
-
-> (stop-at-17 '(9s 8h as))
-#f
-> (stop-at-17 '(8s 8h as))
-#f
-> (stop-at-17 '(7s 8h as))
-#t
-> (stop-at-17 '(9s ah as))
-#f
 
 This stack should provide enough evidence that the procedure works, if there are any bugs anyway, the best-total and stop-at-17 definitions become
 faulty as a consequence because they rely on the same definitions.
@@ -135,77 +101,17 @@ I return false when the dealer has 2 or 3 or 4 or 5 or 6 and the customer has le
 )
 
 The stack trace provides:
-(play-n dealer-sensitive 5)
->(dealer-sensitive '("AC" "7S") "KS") this is as expected
-<#f
->(dealer-sensitive '("5S" "KS") "QC") this is as expected
-<#t
->(dealer-sensitive '("5S" "KS" "3D") "QC") this is as expected
-<#f
->(dealer-sensitive '("10H" "JD") "KS") this is as expected
-<#f
->(dealer-sensitive '("8D" "6H") "QC") this is as expected
-<#t
->(dealer-sensitive '("KH" "QC") "8D") this is as expected
-<#f
--2
 
 For stopping at strategy, should be pretty straightforward:
 (define (stop-at n)
-	(trace-lambda (customer-hand-so-far dealer-card-facing-up)
+	(lambda (customer-hand-so-far dealer-card-facing-up)
 		(< (best-total  customer-hand-so-far) n))
  )
  
- Let's test it:
- 
- > (play-n (stop-at 18) 1)
->(play-n #<procedure> 1)
-> (twenty-one #<procedure>)
-> >(stop-at '("KS" "QC") "5D")
-< <#f
-< 1
-> (play-n #<procedure> 0)
-< 0
-<1
-1
-> (play-n (stop-at 18) 1)
->(play-n #<procedure> 1)
-> (twenty-one #<procedure>)
-> >(stop-at '("9S" "AC") "4D")
-< <#f
-< 1
-> (play-n #<procedure> 0)
-< 0
-<1
-1
-> (play-n (stop-at 18) 1)
->(play-n #<procedure> 1)
-> (twenty-one #<procedure>)
-> >(stop-at '("7S" "AD") "3C")
-< <#f
-< -1
-> (play-n #<procedure> 0)
-< 0
-<-1
-
-> > >(play-n #<procedure> 1)
-> > > (twenty-one #<procedure>)
-> > > >(stop-at '("JD" "5H") "8S")
-< < < <#t
-< < < -1
-> > > (play-n #<procedure> 0)
-< < < 0
-< < <-1
-< < 0
-< <-1
-< 0
-<-1
-
-By the stack it works as expected.
 
 Now for the valentine strategy:
 (define (valentine customer-hand-so-far dealer-card-facing-up)
-	(trace-define (contains-hearts? hand) 
+	(define (contains-hearts? hand) 
 		(let ((suit-card (lambda (card) (last card))))
 			(cond
 				((empty? hand) #f)
@@ -218,79 +124,40 @@ Now for the valentine strategy:
 											         normal) customer-hand-so-far '()))
 )
 
-Now let's test it:
-
->(play-n #<procedure:valentine> 1)
-> (twenty-one #<procedure:valentine>)
-> >(contains-hearts? '("KC" "QH"))
-> >(contains-hearts? '("QH"))
-< <#t
-> >(stop-at '("KC" "QH") '())
-< <#f
-< 0
-> (play-n #<procedure:valentine> 0)
-< 0
-<0
-
-Works as expected
-
->(play-n #<procedure:valentine> 1)
-> (twenty-one #<procedure:valentine>)
-> >(contains-hearts? '("KC" "QH"))
-> >(contains-hearts? '("QH"))
-< <#t
-> >(stop-at '("KC" "QH") '())
-< <#f
-< 0
-> (play-n #<procedure:valentine> 0)
-< 0
-<0
-0
-> (play-n valentine 1)
->(play-n #<procedure:valentine> 1)
-> (twenty-one #<procedure:valentine>)
-> >(contains-hearts? '("2D" "AH"))
-> >(contains-hearts? '("AH"))
-< <#t
-> >(stop-at '("2D" "AH") '())
-< <#t
-> >(contains-hearts? '("2D" "AH" "2H"))
-> >(contains-hearts? '("AH" "2H"))
-< <#t
-> >(stop-at '("2D" "AH" "2H") '())
-< <#t
-> >(contains-hearts? '("2D" "AH" "2H" "JD"))
-> >(contains-hearts? '("AH" "2H" "JD"))
-< <#t
-> >(stop-at '("2D" "AH" "2H" "JD") '())
-< <#t
-> >(contains-hearts? '("2D" "AH" "2H" "JD" "5S"))
-> >(contains-hearts? '("AH" "2H" "JD" "5S"))
-< <#t
-> >(stop-at '("2D" "AH" "2H" "JD" "5S") '())
-< <#f
-< -1
-> (play-n #<procedure:valentine> 0)
-< 0
-<-1
--1
-
-Works as expected. It added cards because the second card the customer got was Ace of Hearts, this made the strategy become stop at 19, so once the points were above it, the customer stopped asking for cards.
-
->(play-n #<procedure:valentine> 1)
-> (twenty-one #<procedure:valentine>)
-> >(contains-hearts? '("AC" "10S"))
-> >(contains-hearts? '("10S"))
-> >(contains-hearts? '())
-< <#f
-> >(stop-at '("AC" "10S") '())
-< <#f
-< 1
-> (play-n #<procedure:valentine> 0)
-< 0
-<1
-1
-
-Works as expected, we didn't got hearts this time and the strategy became stop at 17, and the customer stopped because he got 21
 
 
+Point 7 tells me to generalize the procedure "valentine" with a procedure of three arguments:
+A suit, a normal strategy, and a tailored strategy for when the hand contains the suit.
+
+
+(define (suit-strategy suit tailored-strategy normal-strategy)
+	(lambda (customer-hand-so-far dealer-card-facing-up)
+		(trace-define (contains-suit? hand) 
+		(let ((suit-card (lambda (card) (last card))))
+			(cond
+				((empty? hand) #f)
+				((equal? (suit-card (first hand)) suit) #t)
+				(else (contains-suit? (bf hand))))
+		)) 
+		((if (contains-suit? customer-hand-so-far) tailored-strategy 
+											         normal-strategy) customer-hand-so-far '())
+	)
+)
+
+
+by seeing the stack trace:
+
+
+Part 8.
+
+Procedure named majority.
+Domain: three strategies (procedures)
+Range: a strategy (procedure)
+the result strategy returns true if 2 or 3 domain strategies do it
+
+(define (majority strategy1 strategy2 strategy3)
+	(lambda (customers-cards-so-far dealers-card-facing-up)
+		(let ((majority-tactic (lambda (strategy) (if (strategy customers-cards-so-far dealers-card-facing-up) 1 0))))
+			(> (+ (majority-tactic strategy1) (majority-tactic strategy2) (majority-tactic strategy3)) 1))
+	)
+)

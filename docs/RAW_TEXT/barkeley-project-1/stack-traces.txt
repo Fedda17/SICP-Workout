@@ -1,0 +1,227 @@
+Part 1:
+
+> (best-total '(ad 8s 5h))
+14
+>  (best-total '(ad as 9h))
+21
+>  (best-total '(ad as ac))
+13
+>  (best-total ’(9s as 9h))
+. . ’: undefined;
+ cannot reference an identifier before its definition
+>  (best-total '(9s as 9h))
+19
+>  (best-total '(js as 9h))
+20
+> (best-total '(qs as 9h))
+20
+> (best-total '(ks as 9h))
+20
+> (best-total '(ms as 9h))
+. . Argument to SENTENCE not a word or sentence: #<void>
+
+Part 2:
+> (stop-at-17 '(9s 8h as))
+#f
+> (stop-at-17 '(8s 8h as))
+#f
+> (stop-at-17 '(7s 8h as))
+#t
+> (stop-at-17 '(9s ah as))
+#f
+
+Part 4:
+(play-n dealer-sensitive 5)
+>(dealer-sensitive '("AC" "7S") "KS") this is as expected
+<#f
+>(dealer-sensitive '("5S" "KS") "QC") this is as expected
+<#t
+>(dealer-sensitive '("5S" "KS" "3D") "QC") this is as expected
+<#f
+>(dealer-sensitive '("10H" "JD") "KS") this is as expected
+<#f
+>(dealer-sensitive '("8D" "6H") "QC") this is as expected
+<#t
+>(dealer-sensitive '("KH" "QC") "8D") this is as expected
+<#f
+-2
+
+Part 5:
+> (play-n (stop-at 18) 1)
+>(play-n #<procedure> 1)
+> (twenty-one #<procedure>)
+> >(stop-at '("KS" "QC") "5D")
+< <#f
+< 1
+> (play-n #<procedure> 0)
+< 0
+<1
+1
+> (play-n (stop-at 18) 1)
+>(play-n #<procedure> 1)
+> (twenty-one #<procedure>)
+> >(stop-at '("9S" "AC") "4D")
+< <#f
+< 1
+> (play-n #<procedure> 0)
+< 0
+<1
+1
+> (play-n (stop-at 18) 1)
+>(play-n #<procedure> 1)
+> (twenty-one #<procedure>)
+> >(stop-at '("7S" "AD") "3C")
+< <#f
+< -1
+> (play-n #<procedure> 0)
+< 0
+<-1
+
+> > >(play-n #<procedure> 1)
+> > > (twenty-one #<procedure>)
+> > > >(stop-at '("JD" "5H") "8S")
+< < < <#t
+< < < -1
+> > > (play-n #<procedure> 0)
+< < < 0
+< < <-1
+< < 0
+< <-1
+< 0
+<-1
+
+Part 6:
+>(play-n #<procedure:valentine> 1)
+> (twenty-one #<procedure:valentine>)
+> >(contains-hearts? '("KC" "QH"))
+> >(contains-hearts? '("QH"))
+< <#t
+> >(stop-at '("KC" "QH") '())
+< <#f
+< 0
+> (play-n #<procedure:valentine> 0)
+< 0
+<0
+>(play-n #<procedure:valentine> 1)
+> (twenty-one #<procedure:valentine>)
+> >(contains-hearts? '("KC" "QH"))
+> >(contains-hearts? '("QH"))
+< <#t
+> >(stop-at '("KC" "QH") '())
+< <#f
+< 0
+> (play-n #<procedure:valentine> 0)
+< 0
+<0
+0
+> (play-n valentine 1)
+>(play-n #<procedure:valentine> 1)
+> (twenty-one #<procedure:valentine>)
+> >(contains-hearts? '("2D" "AH"))
+> >(contains-hearts? '("AH"))
+< <#t
+> >(stop-at '("2D" "AH") '())
+< <#t
+> >(contains-hearts? '("2D" "AH" "2H"))
+> >(contains-hearts? '("AH" "2H"))
+< <#t
+> >(stop-at '("2D" "AH" "2H") '())
+< <#t
+> >(contains-hearts? '("2D" "AH" "2H" "JD"))
+> >(contains-hearts? '("AH" "2H" "JD"))
+< <#t
+> >(stop-at '("2D" "AH" "2H" "JD") '())
+< <#t
+> >(contains-hearts? '("2D" "AH" "2H" "JD" "5S"))
+> >(contains-hearts? '("AH" "2H" "JD" "5S"))
+< <#t
+> >(stop-at '("2D" "AH" "2H" "JD" "5S") '())
+< <#f
+< -1
+> (play-n #<procedure:valentine> 0)
+< 0
+<-1
+-1
+
+>(play-n #<procedure:valentine> 1)
+> (twenty-one #<procedure:valentine>)
+> >(contains-hearts? '("AC" "10S"))
+> >(contains-hearts? '("10S"))
+> >(contains-hearts? '())
+< <#f
+> >(stop-at '("AC" "10S") '())
+< <#f
+< 1
+> (play-n #<procedure:valentine> 0)
+< 0
+<1
+1
+
+Part 7:
+(best-total '("6C" "9H"))
+<15
+>(contains-suit? '("6C" "9H"))
+>(contains-suit? '("9H"))
+<#t
+>(best-total '("6C" "9H"))
+<15
+>(best-total '("6C" "9H" "3S"))
+<18
+>(contains-suit? '("6C" "9H" "3S"))
+>(contains-suit? '("9H" "3S"))
+<#t
+>(best-total '("6C" "9H" "3S"))
+<18
+>(best-total '("6C" "9H" "3S" "4C"))
+<22
+-1
+> (play-n valentine 1)
+>(best-total '("KD" "10S"))
+<20
+>(contains-suit? '("KD" "10S"))
+>(contains-suit? '("10S"))
+>(contains-suit? '())
+<#f
+>(best-total '("KD" "10S"))
+<20
+>(best-total '("5C" "5H"))
+<10
+>(best-total '("5C" "5H"))
+<10
+>(best-total '("5C" "5H" "7C"))
+<17
+>(best-total '("5C" "5H" "7C"))
+<17
+>(best-total '("KD" "10S"))
+<20
+>(best-total '("5C" "5H" "7C"))
+<17
+>(best-total '("KD" "10S"))
+<20
+>(best-total '("5C" "5H" "7C"))
+<17
+1
+
+Part 8:
+>(majority '("9S" "6S") "4H")
+<#f
+1
+> (play-n (majority (stop-at 10) dealer-sensitive (suit-strategy 'H (stop-at 10) (stop-at 21))) 1)
+>(majority '("10C" "4S") "9H")
+<#t
+>(majority '("10C" "4S" "2H") "9H")
+<#f
+-1
+> (play-n (majority (stop-at 10) dealer-sensitive (suit-strategy 'H (stop-at 10) (stop-at 21))) 1)
+>(majority '("6D" "QC") "7H")
+<#t
+-1
+> (play-n (majority (stop-at 10) dealer-sensitive (suit-strategy 'H (stop-at 10) (stop-at 21))) 1)
+>(majority '("9S" "8C") "6H")
+<#f
+-1
+> (play-n (majority (stop-at 10) dealer-sensitive (suit-strategy 'H (stop-at 10) (stop-at 21))) 1)
+>(majority '("AD" "KH") "8D")
+<#f
+1
+> 
