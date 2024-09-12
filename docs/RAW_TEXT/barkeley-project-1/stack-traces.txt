@@ -225,3 +225,29 @@ Part 8:
 <#f
 1
 > 
+
+Part 9 stack trace:
+>(reckless '("AC" "3H") "5D")
+<#t
+>(reckless '("AC" "3H" "4D") "5D")
+<#t
+>(reckless '("AC" "3H" "4D" "7D") "5D")
+<#f
+-1
+
+Stack trace part 10:
+>(stop-at '("3D" JOKER1 "8H") "7C")
+> (iter-points '("3D" JOKER1 "8H"))
+> >(iter-points '(JOKER1 "8H"))
+> > (iter-points '("8H"))
+> > >(iter-points '())
+< < <'()
+< < '(8)
+< <'(12 8)
+< '(3 12 8)
+> (sum-best-total '(3 8 12) 0)
+> (sum-best-total '(8 12) 3)
+> (sum-best-total '(12) 11)
+> (sum-best-total '() 21)
+< 21
+<#f

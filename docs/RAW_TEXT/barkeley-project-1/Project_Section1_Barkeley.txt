@@ -161,3 +161,16 @@ the result strategy returns true if 2 or 3 domain strategies do it
 			(> (+ (majority-tactic strategy1) (majority-tactic strategy2) (majority-tactic strategy3)) 1))
 	)
 )
+
+Part 9:
+Procedure reckless:
+Domain: strategy
+Range: strategy
+The returned strategy returns true after the input strategy is false once
+
+
+(define (reckless strategy)
+	(trace-lambda (customers-cards-so-far dealers-card-facing-up)
+		 (strategy (bl customers-cards-so-far) dealers-card-facing-up)
+	)
+)
