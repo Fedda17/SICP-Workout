@@ -153,6 +153,11 @@ The altered procedure is wrong: it must invert the order of coins to which the t
 )    
 
 
+(cc 5 2)
+>(inv-order-coins 5 1)
+> (inv-order-coins 4 1)
+
+
 stack trace altered form:
 >(invert-order-coins 5 0)
 > (invert-order-coins 5 1)
@@ -199,3 +204,122 @@ stack trace normal form:
 The depth in the normal form is deeper because it compares first higher coin values, but the result is the same.
 Also the shape of the tree is different because the recursion stops when the kind of coin "exhausts" the value in increasing order and doesn't compute
 the result for the kind of coins that when subtracted give the amount a negative value
+
+
+The alternate form is still wrong, here's another revised version:
+(define (cc amount kinds-of-coins)
+  (trace-define (invert-order-coins amount k)
+  (cond ((= amount 0) 1)
+        ((or (< amount 0) 
+             (= k kinds-of-coins)) 
+         0)
+        (else 
+         (+ 
+            (invert-order-coins (- amount (first-denomination (+ k 1))) k)
+            (invert-order-coins amount (+ k 1))
+            )
+            )))
+(invert-order-coins amount 0))
+
+I called the free variable kinds-of-coins in respect to invert-order and that made the process block prematurely
+
+Stack trace:
+>(invert-order-coins 5 0)
+> (invert-order-coins 4 0)
+> >(invert-order-coins 3 0)
+> > (invert-order-coins 2 0)
+> > >(invert-order-coins 1 0)
+> > > (invert-order-coins 0 0)
+< < < 1
+> > > (invert-order-coins 1 1)
+> > > >(invert-order-coins -4 1)
+< < < <0
+> > > >(invert-order-coins 1 2)
+< < < <0
+< < < 0
+< < <1
+> > >(invert-order-coins 2 1)
+> > > (invert-order-coins -3 1)
+< < < 0
+> > > (invert-order-coins 2 2)
+< < < 0
+< < <0
+< < 1
+> > (invert-order-coins 3 1)
+> > >(invert-order-coins -2 1)
+< < <0
+> > >(invert-order-coins 3 2)
+< < <0
+< < 0
+< <1
+> >(invert-order-coins 4 1)
+> > (invert-order-coins -1 1)
+< < 0
+> > (invert-order-coins 4 2)
+< < 0
+< <0
+< 1
+> (invert-order-coins 5 1)
+> >(invert-order-coins 0 1)
+< <1
+> >(invert-order-coins 5 2)
+< <0
+< 1
+<2
+2
+
+I can see now why the chain of call is longer according to what the prof said.
+
+
+Part 3:
+Revise cc so that accepts a sentence of kind of coins as an input instead of a number:
+
+(define (count-change amount)
+  (cc amount '(50 25 10 5 1)))
+
+(define (cc amount kinds-of-coins)
+  (cond ((= amount 0) 1)
+        ((or (< amount 0) 
+             (equal? kinds-of-coins '())) 
+         0)
+        (else 
+         (+ (cc amount (bf kinds-of-coins))
+            (cc (- amount (first kinds-of-coins)) kinds-of-coins)))
+  )
+)
+
+> (count-change 5)
+2
+
+This works.
+
+Part 4:
+type check procedure:
+domain: predicate, a function and the data it takes
+range: the computed if the predicate returns true, otherwise false.
+
+(define (type-check func is-type? datum)
+  (if (is-type? datum) (func datum) #f))
+
+--- TEST
+> (type-check sqrt number? 4)
+2.0000000929222947
+> (type-check sqrt number? 'hello)
+#f
+> 
+
+works correctly.
+
+part 5:
+
+(define (make-safe func is-type?)
+  (lambda (datum) (if (is-type? datum) (func datum) #f))
+)
+
+(define safe-sqrt (make-safe sqrt number?))
+> (safe-sqrt 4)
+2.0000000929222947
+> (safe-sqrt 'h)
+#f
+
+works correctly
