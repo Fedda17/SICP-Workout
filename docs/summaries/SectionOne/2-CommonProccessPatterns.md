@@ -139,3 +139,9 @@ The exercise suggests some improvements in order to make the test for prime numb
 ### Resolution
 By testing the Carmicheal numbers several times, I tried to correct my mistakes and finally made a sufficient correct test that it isn't easily fooled by those numbers.
 ### [Thought Process](../../solutions/SectionOne/2-CommonProcessPatterns/SICP-Exercises/1.28.md)
+
+## Barkeley Exercises
+### Resolution
+I found a lot of difficulty doing these, especially for clarity regarding the requirements and the need to modify the coin change program didn't find it very agreeable.
+### [Lab](../../solutions/SectionOne/2-CommonProcessPatterns/Barkeley-Exercises/lab-week3.md)
+### [homework](../../solutions/SectionOne/3-HigherOrderProc/Barkeley-Exercises/hw-week3.md)

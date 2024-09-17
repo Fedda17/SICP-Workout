@@ -1,5 +1,5 @@
-Blackjack project.  
-Rules of the game:  
+# Blackjack project.  
+## Rules of the game:  
 Two Players wich purpose is getting at 21 through a set of cards  
 Players are dealer and costumer  
 For programming purpose, the cards are made by words  
@@ -48,6 +48,8 @@ Writing and test of the procedure:
 procedure that returns a sentence of points ordered.
 sum ordered points accounting for ace value
 
+
+## Calculate the best possible points
  ``` racket
 (define (best-total hand)
 	(define (points-association card) 
@@ -102,6 +104,7 @@ sum ordered points accounting for ace value
 . . Argument to SENTENCE not a word or sentence: #<void>
 </details>
 
+## Strategy for stopping at 17 like the dealer
 Part 2 I have to write a procedure that does the same but for the dealer, I expect to reuse a lot of code:
 
  ``` racket
@@ -125,6 +128,8 @@ Part 2 I have to write a procedure that does the same but for the dealer, I expe
 This stack should provide enough evidence that the procedure works, if there are any bugs anyway, the best-total and stop-at-17 definitions become
 faulty as a consequence because they rely on the same definitions.
 
+
+## Play the game n times
 Now for play-n:
 
  ``` racket
@@ -133,6 +138,7 @@ Now for play-n:
  ```
 
 	
+## Choose the next move by seeing what's on the Dealer's hand
 For the dealer sensitive strategy, there are two cases:
 I return true when the dealer facing up card is 7 or 8 or 9 or 10 or ace or picture and the customer has less than 17
 I return false when the dealer has 2 or 3 or 4 or 5 or 6 and the customer has less than 12
@@ -165,6 +171,8 @@ The stack trace provides:
 -2
 </details>
 
+
+## Generalization of stopping at X points strategy
 For stopping at strategy, should be pretty straightforward:
 
  ``` racket
@@ -221,6 +229,8 @@ For stopping at strategy, should be pretty straightforward:
 <-1
 </details>
 
+
+## Valentine's strategy: play more aggressive if you have a heart suit
 Now for the valentine strategy:
 
  ``` racket
@@ -309,6 +319,8 @@ Now for the valentine strategy:
 1
 </details>
 
+
+## Generalization of the suit strategy
 Point 7 tells me to generalize the procedure "valentine" with a procedure of three arguments:
 A suit, a normal strategy, and a tailored strategy for when the hand contains the suit.
 
@@ -379,6 +391,8 @@ by seeing the stack trace:
 1
 </details>
 
+
+## "Pick another card if 2 strategy give you the go" strategy
 Part 8.
 
 Procedure named majority.
@@ -421,6 +435,7 @@ the result strategy returns true if 2 or 3 domain strategies do it
 > 
 </details>
 
+## "Just one more card..." strategy
 Part 9:
 Procedure reckless:
 Domain: strategy
@@ -446,6 +461,7 @@ The returned strategy returns true after the input strategy is false once
  ```
 
 
+## Stack trace for the program with two Jokers in the deck
 Joker Part Modification Stack trace:
 <details>
 <summary><b>Stack Trace</b></summary>
@@ -465,3 +481,7 @@ Joker Part Modification Stack trace:
 < 21
 <#f
 </details>
+
+## [Download the Joker Game](./joker.rkt)
+## [Download the Strategies](./strategies.rkt)
+## [Download the core game](./twenty-one.rkt)
