@@ -22,4 +22,5 @@ Presenting to you the threading I did in order to make sense of the exercises in
 1.3 [Further Abstractions with Higher order procedures!](/summaries/SectionOne/3-HigherOrderProc)  
 
 Project 1: [Blackjack game](./solutions/SectionOne/barkeley-project-1/Project_Section1_Barkeley.md)
+
 --------
