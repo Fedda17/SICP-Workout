@@ -50,7 +50,7 @@ sum ordered points accounting for ace value
 
 
 ## Calculate the best possible points
- ``` racket
+``` racket
 (define (best-total hand)
 	(define (points-association card) 
 			(let ((card-rank (bl card)))
@@ -83,6 +83,7 @@ sum ordered points accounting for ace value
 
 <details>
 <summary> <b>Stack trace</b> </summary>
+``` racket
 > (best-total '(ad 8s 5h))
 14
 >  (best-total '(ad as 9h))
@@ -102,19 +103,20 @@ sum ordered points accounting for ace value
 20
 > (best-total '(ms as 9h))
 . . Argument to SENTENCE not a word or sentence: #<void>
+```
 </details>
 
 ## Strategy for stopping at 17 like the dealer
 Part 2 I have to write a procedure that does the same but for the dealer, I expect to reuse a lot of code:
 
- ``` racket
+``` racket
 (define (stop-at-17 customer-hand-so-far dealer-card-facing-up)
 	(< (best-total  customer-hand-so-far) 17)
 ) 
- ```
-
+```
 <details>
 <summary> <b>Stack trace</b> </summary>
+``` racket
 > (stop-at-17 '(9s 8h as))
 #f
 > (stop-at-17 '(8s 8h as))
@@ -123,6 +125,7 @@ Part 2 I have to write a procedure that does the same but for the dealer, I expe
 #t
 > (stop-at-17 '(9s ah as))
 #f
+```
 </details>
 
 This stack should provide enough evidence that the procedure works, if there are any bugs anyway, the best-total and stop-at-17 definitions become
@@ -132,29 +135,28 @@ faulty as a consequence because they rely on the same definitions.
 ## Play the game n times
 Now for play-n:
 
- ``` racket
+``` racket
 (define (play-n strategy n)
 		(if (> n 0) (+ (twenty-one strategy) (play-n strategy (- n 1))) 0)) 
- ```
-
+```
 	
 ## Choose the next move by seeing what's on the Dealer's hand
 For the dealer sensitive strategy, there are two cases:
 I return true when the dealer facing up card is 7 or 8 or 9 or 10 or ace or picture and the customer has less than 17
 I return false when the dealer has 2 or 3 or 4 or 5 or 6 and the customer has less than 12
 
- ``` racket
+``` racket
 (define (dealer-sensitive customer-hand-so-far dealer-card-facing-up)
 		(cond ((> (best-total (sentence dealer-card-facing-up '())) 6) (< (best-total customer-hand-so-far) 17))
 				(else (< (best-total customer-hand-so-far) 12)))
 )
- ```
-
+```
 
 The stack trace provides:
 
 <details>
 <summary> <b>Stack trace</b> </summary>
+``` racket
 (play-n dealer-sensitive 5)
 >(dealer-sensitive '("AC" "7S") "KS") this is as expected
 <#f
@@ -169,22 +171,23 @@ The stack trace provides:
 >(dealer-sensitive '("KH" "QC") "8D") this is as expected
 <#f
 -2
+```
 </details>
 
 
 ## Generalization of stopping at X points strategy
 For stopping at strategy, should be pretty straightforward:
 
- ``` racket
+``` racket
 (define (stop-at n)
 	(lambda (customer-hand-so-far dealer-card-facing-up)
 		(< (best-total  customer-hand-so-far) n))
  )
- ```
-
+```
  
 <details>
 <summary> <b>Stack trace</b></summary>
+``` racket
 > (play-n (stop-at 18) 1)
 >(play-n #<procedure> 1)
 > (twenty-one #<procedure>)
@@ -227,13 +230,14 @@ For stopping at strategy, should be pretty straightforward:
 < <-1
 < 0
 <-1
+```
 </details>
 
 
 ## Valentine's strategy: play more aggressive if you have a heart suit
 Now for the valentine strategy:
 
- ``` racket
+``` racket
 (define (valentine customer-hand-so-far dealer-card-facing-up)
 	(define (contains-hearts? hand) 
 		(let ((suit-card (lambda (card) (last card))))
@@ -252,6 +256,7 @@ Now for the valentine strategy:
 
 <details>
 <summary><b>Stack Trace</b></summary>
+``` racket
 >(play-n #<procedure:valentine> 1)
 > (twenty-one #<procedure:valentine>)
 > >(contains-hearts? '("KC" "QH"))
@@ -317,6 +322,7 @@ Now for the valentine strategy:
 < 0
 <1
 1
+```
 </details>
 
 
@@ -324,7 +330,7 @@ Now for the valentine strategy:
 Point 7 tells me to generalize the procedure "valentine" with a procedure of three arguments:
 A suit, a normal strategy, and a tailored strategy for when the hand contains the suit.
 
- ``` racket
+``` racket
 (define (suit-strategy suit tailored-strategy normal-strategy)
 	(lambda (customer-hand-so-far dealer-card-facing-up)
 		(trace-define (contains-suit? hand) 
@@ -338,14 +344,14 @@ A suit, a normal strategy, and a tailored strategy for when the hand contains th
 											         normal-strategy) customer-hand-so-far '())
 	)
 )
- ```
-
+```
 
 
 by seeing the stack trace:
 
 <details>
 <summary><b>Stack Trace</b></summary>
+``` racket
 (best-total '("6C" "9H"))
 <15
 >(contains-suit? '("6C" "9H"))
@@ -389,6 +395,7 @@ by seeing the stack trace:
 >(best-total '("5C" "5H" "7C"))
 <17
 1
+```
 </details>
 
 
@@ -400,7 +407,7 @@ Domain: three strategies (procedures)
 Range: a strategy (procedure)
 the result strategy returns true if 2 or 3 domain strategies do it
 
- ``` racket
+``` racket
 (define (majority strategy1 strategy2 strategy3)
 	(lambda (customers-cards-so-far dealers-card-facing-up)
 		(let ((majority-tactic (lambda (strategy) (if (strategy customers-cards-so-far dealers-card-facing-up) 1 0))))
@@ -411,6 +418,7 @@ the result strategy returns true if 2 or 3 domain strategies do it
 
 <details>
 <summary><b>Stack Trace</b></summary>
+``` racket
 >(majority '("9S" "6S") "4H")
 <#f
 1
@@ -433,6 +441,7 @@ the result strategy returns true if 2 or 3 domain strategies do it
 <#f
 1
 > 
+```
 </details>
 
 ## "Just one more card..." strategy
@@ -443,6 +452,7 @@ Range: strategy
 The returned strategy returns true after the input strategy is false once
 <details>
 <summary><b>Stack Trace</b></summary>
+``` racket
 >(reckless '("AC" "3H") "5D")
 <#t
 >(reckless '("AC" "3H" "4D") "5D")
@@ -450,21 +460,22 @@ The returned strategy returns true after the input strategy is false once
 >(reckless '("AC" "3H" "4D" "7D") "5D")
 <#f
 -1
+```
 </details>
 
- ``` racket
+``` racket
 (define (reckless strategy)
 	(trace-lambda (customers-cards-so-far dealers-card-facing-up)
 		 (strategy (bl customers-cards-so-far) dealers-card-facing-up)
 	)
 )
- ```
-
+```
 
 ## Stack trace for the program with two Jokers in the deck
 Joker Part Modification Stack trace:
 <details>
 <summary><b>Stack Trace</b></summary>
+``` racket
 >(stop-at '("3D" JOKER1 "8H") "7C")
 > (iter-points '("3D" JOKER1 "8H"))
 > >(iter-points '(JOKER1 "8H"))
@@ -480,6 +491,7 @@ Joker Part Modification Stack trace:
 > (sum-best-total '() 21)
 < 21
 <#f
+```
 </details>
 
 ## [Download the Joker Game](./joker.rkt)
