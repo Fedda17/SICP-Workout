@@ -166,5 +166,5 @@ Here's the solution from the prof:
 			(- chunk 1)
 			(lambda (result2)
 			  (next (+ result1 result2)))))))))
- ``` 
+``` 
 </details>
