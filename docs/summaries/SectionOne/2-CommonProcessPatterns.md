@@ -144,4 +144,4 @@ By testing the Carmicheal numbers several times, I tried to correct my mistakes 
 ### Resolution
 I found a lot of difficulty doing these, especially for clarity regarding the requirements and the need to modify the coin change program didn't find it very agreeable.
 ### [Lab](../../solutions/SectionOne/2-CommonProcessPatterns/Barkeley-Exercises/lab-week3.md)
-### [homework](../../solutions/SectionOne/2-CommonProcessPaterns/Barkeley-Exercises/hw-week3.md)
+### [homework](../../solutions/SectionOne/2-CommonProcessPatterns/Barkeley-Exercises/hw-week3.md)
