@@ -1,0 +1,70 @@
+Make-rat procedure version that handle the sign of the rational in this way:
+if the rational is positive if both num and den are > 0
+otherwise, the numerator is negative.
+
+importing the definitions for make-rate, num and denom
+
+(define (make-rat n d)
+  (let ((g (gcd n d)))
+    (cons (/ (if (> (* n d) 0) n (- n) g) 
+          (/ (abs d) g))))
+
+(define (gcd a b)
+  (if (= b 0)
+      a
+      (gcd b (remainder a b))))
+
+(define (print-rat x)
+  (newline)
+  (display (numer x))
+  (display "/")
+  (display (denom x)))
+
+    (define (numer x) (car x))
+    (define (denom x) (cdr x))
+
+--- TEST RESULT
+> (make-rat -5 -3)
+'(5 . 3)
+> (make-rat 5 -2)
+'(5 . -2)
+
+I forgot to make the denominator always positive, now by using the abs function I adjusted the behaviour
+
+
+--- TEST RESULT
+> (make-rat 1 -2)
+'(-1 . 2)
+> (make-rat 6 -3)
+'(2 . -1)
+
+Since gcd operates on n and d, I guess it's significant for the signs of the numbers. I have to make a combination that modify the sign before:
+
+(define (make-rat n d)
+  (let ((g (gcd n d)))
+    (cons ((if (> (* n d) 0) + - ) (/ n g)) 
+          (abs (/ d g)))))
+
+--- TEST RESULT
+
+ (make-rat 6 -3)
+'(2 . 1)
+
+The test is still negative, I use abs in the gcd reduction because the sign doesn't affect it and I need to consider only positive numbers:
+
+
+(define (make-rat n d)
+  (let ((g (abs (gcd n d))))
+    (cons ((if (> (* n d) 0) + - ) (/ (abs n) g)) 
+          (abs (/  d g)))))
+
+> (make-rat 6 -3)
+'(-2 . 1)
+> (make-rat -6 3)
+'(-2 . 1)
+> (make-rat -1 2)
+'(-1 . 2)
+> (make-rat 10 5)
+'(2 . 1)
+
+now the procedure works.
