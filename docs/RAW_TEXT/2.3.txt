@@ -1,0 +1,68 @@
+This exercise asks me to implement two different modules of representation of a rectangle and test the two implementations with a perimeter and area procedure.
+Also suggests me to use the segment procedures I defined in the previous exercise:
+
+(define (make-point x y) (if (and (number? x) (number? y)) (cons x y) (error "required numbers for point")))
+(define (x-point point) (car point))
+(define (y-point point) (cdr point))
+
+(define (make-segment p1 p2) 
+    (define (is-point? p) (and (number? (car p)) (number? (cdr p))))
+(if (and (is-point? p1) (is-point? p2)) (cons p1 p2) (error "required points for segments.")))
+(define (start-segment seg) (car seg))
+(define (end-segment seg) (cdr seg))
+
+(define (get-segment-length seg) 
+    (let ((pythagora (lambda (c1 c2)
+          (sqrt (+ (square (- (x-point c1) (x-point c2)))
+                (square (- (y-point c1) (y-point c2)))))))
+        )
+    (pythagora (start-segment seg) (end-segment seg)))
+)
+
+redefinition of make-segment procedure in order to use it as a check for correct construction of a segment.
+
+(define (make-segment p1 p2) 
+    (define (is-point? p) (and (number? (car p)) (number? (cdr p))))
+(if (and (is-point? p1) (is-point? p2)) (cons p1 p2) '()))
+
+Now for the rectangle module:
+
+(define (make-rect late1 late2)
+        (define (is-segment? seg) (if (equal? (make-segment (car seg) (cdr seg)) '()) #f #t))
+        (if (and (is-segment? late1) (is-segment? late2)) (cons late1 late2) '()))
+
+(define (get-first-late rect)
+         (if (empty? (make-rect (car rect) (cdr rect))) (error "not a rect")
+          (get-segment-length (car rect)))
+(define (get-second-late rect) (if (empty? (make-rect (car rect) (cdr rect))) (error "not a rect") (get-segment-length (cdr rect))) )
+
+(define (perimeter-of-rect rect) 
+    (if (empty? (make-rect (car rect) (cdr rect))) 
+        (error "not a rect")
+        (* 2 (+ (car rect) (cdr rect))))
+)
+
+(define (area-of-a-rect rect) 
+    (if (empty? (make-rect (car rect) (cdr rect))) 
+            (error "not a rect")
+            (* (car rect) (cdr rect))
+    )
+)
+
+I'll have to remake the laste two because I don't like how it exposes car and cdr to the definitions that use the abstract data directly
+
+(define (perimeter-of-rect rect) 
+        (* 2 (+ (get-first-late rect) (get-second-late rect)))
+)
+
+(define (area-of-a-rect rect) 
+            (* (get-first-late rect) (get-second-late rect))
+)
+
+TEST RESULT --- NEGATIVE: 
+ +: contract violation
+  expected: number?
+  given: '((1 . 3) 5 . 7)
+
+
+EXPORT PROGRAM AT THE END
