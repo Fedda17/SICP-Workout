@@ -1,0 +1,31 @@
+To complete this exercise, I have to verify if these procedures are a valid representation of a pair and use the substitution model as a test:
+
+(define (cons x y) 
+  (lambda (m) (m x y)))
+
+(define (car z) 
+  (z (lambda (p q) p)))
+
+TEST RESULT --- 
+
+> (car (cons 1 2)) 
+1
+> (car (cons '() 2))
+'()
+> (car (cons (lambda (x) x) 2))
+#<procedure>
+> (car (cons (lambda (x) x) 'ciao))
+#<procedure>
+> 
+
+OK
+
+Now what about the cdr procedure?
+
+(define (cdr z) 
+  (z (lambda (p q) q)))
+
+Seemed enough evident that this is the definition considering the car procedure.
+
+Now I'll use the substitution model to see how the process works:
+

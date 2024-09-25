@@ -33,8 +33,11 @@ Now for the rectangle module:
 
 (define (get-first-late rect)
          (if (empty? (make-rect (car rect) (cdr rect))) (error "not a rect")
-          (get-segment-length (car rect)))
-(define (get-second-late rect) (if (empty? (make-rect (car rect) (cdr rect))) (error "not a rect") (get-segment-length (cdr rect))) )
+          (car rect)))
+(define (get-second-late rect) (if (empty? (make-rect (car rect) (cdr rect))) (error "not a rect") 
+            (cdr rect)))
+
+
 
 (define (perimeter-of-rect rect) 
     (if (empty? (make-rect (car rect) (cdr rect))) 
@@ -48,6 +51,8 @@ Now for the rectangle module:
             (* (car rect) (cdr rect))
     )
 )
+
+
 
 I'll have to remake the laste two because I don't like how it exposes car and cdr to the definitions that use the abstract data directly
 
@@ -64,5 +69,38 @@ TEST RESULT --- NEGATIVE:
   expected: number?
   given: '((1 . 3) 5 . 7)
 
+I have to modify the late procedure in order to make them return a number when called so we can perform the calculations for area and perimeter:
+
+(define (get-first-late rect)
+         (if (empty? (make-rect (car rect) (cdr rect))) (error "not a rect")
+          (get-segment-length (car rect))))
+(define (get-second-late rect) (if (empty? (make-rect (car rect) (cdr rect))) (error "not a rect") 
+            (get-segment-length (cdr rect))))
+
+I defined a get-segment-length procedure that uses the pythagorean theorem
+
+TEST RESULT --- POSITIVE
+
+> (perimeter-of-rect rect-1)
+36.92620544871615
+
+(area-of-a-rect rect-1)
+72.44308110509934
+
+For a different implementation of a rectangle, I can consider it being formed by two datas: the length of late a and the length of late b:
+
+(define (make-rect late-a late-b) (if (and (number? late-a) (number? late-b)) (cons late-a late-b) '()))
+(define (get-first-late rect) (if (empty? (make-rect (car rect) (cdr rect))) (error "not a rect") (car rect)))
+(define (get-second-late rect) (if (empty? (make-rect (car rect) (cdr rect))) (error "not a rect") (cdr rect)))
+
+TEST RESULT --- POSITIVE
+
+>  (perimeter-of-rect (make-rect 13 17))
+60
+>  (area-of-a-rect (make-rect 13 17))
+221
+> 
+
+This concludes the exercise
 
 EXPORT PROGRAM AT THE END
