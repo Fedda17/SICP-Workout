@@ -1,0 +1,29 @@
+This exercise asks me to make a function for showing that the width of two intervals is a function only of the widths of the intervals being added.
+
+They define width of an interval as half of the difference between its upper and lower bound.
+
+I think I have to show if width(int1+int2) is correct as width(int1) + width(int2)
+
+
+
+(define (width x)
+    (/ (- (upper-bound x) (lower-bound x)) 2)
+)
+
+to show that width(int1) + width(int2) is correct I'll use width(int1) - width(int1) = width(int1+int2) = 0
+Instead, width(int1/int1) != 1
+
+TEST RESULT ---
+
+> (- (width (make-interval 2.45 2.89)) (width (make-interval 2.45 2.89)))
+0.0
+> (width (sub-interval (make-interval 2.45 2.89) (make-interval 2.45 2.89) ))
+0.0
+> (width (div-interval (make-interval 2.45 2.89) (make-interval 2.45 2.89) ))
+-0.16592048584139535
+>  (/ (width (make-interval 2.45 2.89)) (width (make-interval 2.45 2.89)))
+1.0
+> 
+
+This concludes the exercise
+

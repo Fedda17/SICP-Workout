@@ -29,3 +29,18 @@ Seemed enough evident that this is the definition considering the car procedure.
 
 Now I'll use the substitution model to see how the process works:
 
+FOR CONS
+(cons 1 2)
+->(lambda (m) (m 1 2))
+    return procedure above
+    (the strength of the cons procedure defined by the language is that it returns as a value the pair)
+
+suppose the pair above is t:
+
+FOR CAR
+(car m)
+->(t (lambda (p q) p))
+-> ((lambda (m) (m 1 2)) (lambda (p q) p))
+-> ((lambda (p q) p) 1 2) -> (lambda (1 2) 1)  according to the substition model.
+
+cdr is similar.

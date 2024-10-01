@@ -1,0 +1,10 @@
+I have to modify the code of div-interval because we don't have a rule for dividing an interval that spans 0:
+
+
+(define (div-interval x y)
+  (mul-interval x 
+                (if (or (= (upper-bound y) 0.0) (= (lower-bound y) 0.0))
+                        (error "not clear when divisor spans 0")
+                        (make-interval 
+                            (/ 1.0 (upper-bound y)) 
+                            (/ 1.0 (lower-bound y))))))

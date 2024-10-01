@@ -1,0 +1,40 @@
+This exercise asks me to implement a pair of only non negative numbers a and b as the product of 2^a*3^b
+
+So this number makes the pair (a, b)
+
+if (cons a b) = 2^a*3^b for a, b > 0
+then (car c) = a 
+and (cdr c) = b
+
+(define (cons a b)
+    (* (expt 2 a) (expt 3 b)))
+
+(define (car c)
+    (+ 1 (if (= 0 (remainder c 2))  (car (/ c 2)) 0))
+
+(define (cdr c)
+    (+ 1 (if (= 0 (remainder c 3)) (cdr (/ c 3)) 0))
+
+So by using this procedures, I think I'll obtain the expt of 2 and 3 that are a and b
+
+RESULT TEST --- NEGATIVE
+
+> (define c (cons 5 4))
+> (car c)
+6
+
+the way the recursion worked it increased before it was necessary.
+
+CORRECT PROCEDURES:
+(define (car c)
+    (if (= 0 (remainder c 2)) (+ 1 (car (/ c 2))) 0))
+
+(define (cdr c)
+    (if (= 0 (remainder c 3)) (+ 1 (cdr (/ c 3))) 0))
+    
+TEST RESULT -- POSITIVE:
+> (cdr (cons 5 4))
+4
+> (car (cons 5 4))
+5
+> 

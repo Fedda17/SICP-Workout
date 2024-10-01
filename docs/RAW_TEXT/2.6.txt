@@ -1,0 +1,127 @@
+This exercise asks me to implement one and two as a pair implemented by lambda expressions, the text uses these two definitions:
+
+(define zero (lambda (f) (lambda (x) x))) Procedure that applies x 0 times
+
+(define (add-1 n)
+  (lambda (f) (lambda (x) (f ((n f) x))))) 
+
+for implementing 0 and add-1
+
+The text suggests to use the substituion model to evaluate (add-1 zero) and to give a direct definition of the addition procedure:
+
+(add-1 zero)
+-> (lambda (f) (lambda (x) (f ((zero f) x)))) 
+-> (lambda (f) (lambda (x)
+                (f
+                    (
+                    ((lambda (f) (lambda (x) x)) f)
+                        x)
+                )))
+-> (lambda (f) (lambda (x)
+                (f
+                    (
+                    ((lambda (f) (lambda (x) x)) f)
+                        x)
+                )))
+
+f->x->x; f = f
+f->x->x; x = x
+f->x->x->x "adds one more application to zero"
+
+So, time for the second hint, how I would define an addition between numbers represented by procedures?
+
+an addition between two data is a combination between two datas:
+(add p1 p2)
+
+if p1 = f->x->x = 0
+and p2 = f->x->x->x = 1
+
+then (add p1 p2) should return f->x->x->x
+
+(define (add-p n1 n2) 
+    (lambda (f) 
+        (lambda (x) (f (((n1 f) n2 ) x)))))
+If I call add-p with zero and zero, the procedure should return 0?
+
+TEST:
+
+substitution model:
+
+(add-p zero zero)
+->(lambda (f)
+    (lambda (x)
+        (f 
+                (((lambda (f)
+                        (lambda (x) x)) f)
+                         (lambda (f) 
+                            (lambda (x) x))) x))))
+
+NEGATIVE.
+
+I have to retrace the add-1 procedure, also I guess that the addition procedure is a composition:
+((lambda (f) (lambda (x) x) f)->(lambda (x) x)
+((lambda (x) x) x) -> x
+(lambda (f) (lambda (x) (f x))) = 1
+(lambda (f) (lambda (x) (f (f x)))) = 2
+
+(define (add n1 n2) (lambda (f)
+        (lambda (x) (f ((n2 (n1 f)) x)))
+    )
+)
+
+(add zero zero)
+-> (lambda (f) 
+        (lambda (x) (f ((zero (zero f)) x)))
+    )
+-> (lambda (f)
+        (lambda (x) 
+            (f (((lambda (f) (lambda (x) x)) 
+                ((lambda (f) (lambda (x) x)) f)) 
+                    x)))
+    )
+
+((lambda (f) (lambda (x) x)) f) -> (lambda (x) x)
+((lambda (f) (lambda (x) x)) ((lambda (x) x))-> (lambda (x) x)
+((lambda (x) x) x)-> x
+(lambda (f) (lambda (x) (f x))) INCORRECT
+
+RETRY:
+(define (add n1 n2) (lambda (f)
+        (lambda (x) ((n1 ((n2 f) x)) f)
+    )
+)
+
+
+((lambda (f) (lambda (x) x) f) = (lambda (x) x)
+((lambda (x) x) x) = x
+((lambda (f) (lambda (x) x)) x) = (lambda (x) x)
+((lambda (x) x) f) = x
+(lambda (f) (lambda (x) x)) vvv
+
+(define (add-1 n)
+  (lambda (f) (lambda (x) (f ((n f) x))))) 
+
+(add-1 one)
+-> (lambda (f) (lambda (x) (f ((one f) x))))
+-> (lambda (f) 
+        (lambda (x) (f (((lambda (f) (lambda (x) (f x))) f) x)))
+    )
+-> ((lambda (f) (lambda (x) (f x))) f) -> (lambda (x) (f x))
+    ((lambda (x) (f x)) x) -> (f x)
+
+RETRY:
+(define (add n1 n2) (lambda (f)
+        (lambda (x) ((n1 f) ((n2 f) x)))
+    )
+)
+
+(add zero one)
+-> (lambda (f) (lambda (x) ((zero f) ((one f) x))))
+-> (lambda (f) (lambda (x) 
+        (((lambda (f) (lambda (x) x)) f) ((lambda (f) (lambda (x) (f x))) x)))    
+    )
+-> ((lambda (f) (lambda (x) (f x))) f) = (lambda (x) (f x))
+-> ((lambda (x) (f x)) x) = (f x)
+    ((lambda (x) x) (f x)) = (f x)
+
+    VVV
