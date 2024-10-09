@@ -1,0 +1,44 @@
+This exercise asks me to make a procedure for producing a list that contains the elements of another list in reverse order:
+
+
+(define (reverse l)
+        (if (null? l) null (cons (reverse (cdr l)) (car l))))
+
+TEST RESULT --- NEGATIVE:
+
+'(((((() . 5) . 4) . 3) . 2) . 1)
+> 
+
+The nil should be at the and of the list:
+The result is also not a list because the cdr is not a sublist
+
+Using list-ref for taking the elements iteratively in reverse order:
+
+(define (reverse l)
+    (if (null? l) '()
+        (cons (list-ref l (- (length l) 1))  (reverse (cdr l)))
+    )         
+)
+
+TEST RESULT --- NEGATIVE:
+
+(reverse (list 1 2 3 4 5))
+'(5 5 5 5 5)
+> 
+This way takes always the last element (n - 1)
+
+(define (reverse l)
+    (define (i-element i)
+        (if (= (- (length l) i) -1 ) '()
+            (cons (list-ref l (- (length l) i))  (i-element (+ i 1)))
+        )
+    )
+    (i-element 1)
+)
+
+TEST RESULT --- POSITIVE
+>  (reverse (list 1 2 3 4 5))
+'(5 4 3 2 1)
+> (reverse (list 1 4 9 16 25))
+'(25 16 9 4 1)
+> 
