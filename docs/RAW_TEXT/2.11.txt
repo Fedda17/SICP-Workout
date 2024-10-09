@@ -11,3 +11,11 @@ This exercise requires to modify the mul-interval definition in order to conside
                (upper-bound y))))
     (make-interval (min p1 p2 p3 p4)
                    (max p1 p2 p3 p4))))
+
+How do I test the signs of an endpoint's interval?
+there's the primitive procedure positive?
+
+How do I break the mul-interval according to the sign of the endpoint?
+
+
+Try again after end section 2?
