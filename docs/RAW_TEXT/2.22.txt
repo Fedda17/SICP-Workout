@@ -1,0 +1,28 @@
+why this procedure produces the answer in the reverse order?
+
+(define (square-list items)
+  (define (iter things answer)
+    (if (null? things)
+        answer
+        (iter (cdr things)
+              (cons (square (car things))
+                    answer))))
+  (iter items nil))
+
+The tail call makes the new element attach at the beginning of the list calling cons at the "head" of the list.
+
+Another user fixes it in this way but doesn't work, why?
+
+(define (square-list items)
+  (define (iter things answer)
+    (if (null? things)
+        answer
+        (iter (cdr things)
+              (cons answer
+                    (square 
+                     (car things))))))
+  (iter items nil))
+
+by putting answer as the first argument to cons, they're building a list where the first element of the final pair is a null value and the cdr of each pair doesn't point to the next pair.
+
+
