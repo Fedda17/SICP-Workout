@@ -104,3 +104,89 @@ TEST RESULT --- POSITIVE!
 1
 > ((cxr-function 'cadr) (list (list 1 4) 2 3))
 '(4)
+
+The prof asks me to invent multiplication and exponantiation with nonnegative integers using the Alonzo Church numbers:
+
+recall the definition of addition:
+(define (add n1 n2) (lambda (f)
+        (lambda (x) ((n1 f) ((n2 f) x)))
+    )
+)
+
+for moltiplication, if f = x->x and g = x->x->x then f * g = x->x->x
+
+(define (mul n1 n2) (lambda (f) 
+        (lambda (x) 
+                ((n1 (n2 f)) x))))
+
+substitution model->
+
+n1 = (lambda (f) (lambda (x) (f x)))
+n2 = (lambda (f) (lambda (x) (f (f x))))
+
+(lambda (f) 
+        (lambda (x) 
+                (((lambda (f) (lambda (x) (f x))) ((lambda (f) (lambda (x) (f (f x)))) f)) x)))
+-> (lambda (f) 
+        (lambda (x) 
+                (((lambda (f) (lambda (x) (f x))) ((lambda (x) (f (f x))))) x)))
+->(lambda (f) 
+        (lambda (x) 
+                (((lambda (f) (lambda (x) (f x))) (f (f x))) x)))
+->(lambda (f) 
+        (lambda (x) 
+                ((lambda (x) ((f (f x)) x)) x)))
+INCORRECT.
+
+retry:
+(define (mul n1 n2) (lambda (f) 
+        (lambda (x) 
+                (((n1 f) (n2 f)) x))))
+
+substitution model->
+
+n1 = (lambda (f) (lambda (x) (f x)))
+n2 = (lambda (f) (lambda (x) (f (f x))))
+
+->(lambda (f) 
+        (lambda (x) 
+                ((((lambda (f) (lambda (x) (f x))) f) ((lambda (f) (lambda (x) (f (f x)))) f)) x)))
+->(lambda (f) 
+        (lambda (x) 
+                (((lambda (x) (f x)) (lambda (x) (f (f x)))) x)))
+->
+
+((lambda (f) (lambda (x) (f (f x)))) (lambda (x) (f (f x))))) 
+-> (lambda (x) ((lambda (x) (f (f x))) ((lambda (x) (f (f x))) x)))
+-> (lambda (x) ((lambda (x) (f (f x))) (f (f x))))
+
+I think this is the right process for multiplication, which translates to:
+
+((lambda (f) (lambda (x) (f (f x)))) (lambda (x) (f (f x))))) 
+(define (mul a b)
+    (lambda (f) 
+        (lambda (x) (a (b f)) x)))
+
+a = (lambda (f) (lambda (x) (f x)))
+b = (lambda (f) (lambda (x) (f (f x))))
+
+substitution ->
+-> (lambda (f) 
+        (lambda (x) 
+            ((lambda (f) (lambda (x) (f x)) 
+                ((lambda (f) (lambda (x) (f (f x)))) f)) x)))
+-> (lambda (f) 
+        (lambda (x) 
+            (((lambda (f) (lambda (x) (f x))) 
+                (lambda (x) (f (f x)))) x)))
+-> (lambda (f) 
+        (lambda (x) 
+            ((lambda (x) ((lambda (x) (f (f x))) x)) x)))
+-> (lambda (f) 
+        (lambda (x) 
+            ((lambda (x) (f (f x))) x)))
+-> (lambda (f) 
+        (lambda (x) (f (f x))))
+
+for exponantiation?
+I'm done with this exercise.
