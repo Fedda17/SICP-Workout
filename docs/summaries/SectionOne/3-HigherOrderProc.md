@@ -139,5 +139,5 @@ Combined all the previously verified knowledge in these recent exercise I came u
 
 ### Resolution
 I'm glad I experimented more with lambda expressions
-### [Lab](../../solutions/SectionOne/3-HigherOrderProc/Barkeley-Exercises/lab-week2.md)
-### [homework](../../solutions/SectionOne/3-HigherOrderProc/Barkeley-Exercises/hw-week2.md)
+### [Lab](../../solutions/SectionOne/Berkeley-Exercises/lab-week2.md)
+### [homework](../../solutions/SectionOne/Berkeley-Exercises/hw-week2.md)

@@ -106,4 +106,4 @@ The first complex exercise I encountered studying the book that helped me to see
 #### [Thought Process](../../solutions/SectionOne/1-ElementsOfProgramming/Barkeley-Exercises/remove-duplicates-characters.md)
 #### [Source code](../..//source_code/SectionOne/1-ElementsOfProgramming/remove_duplicates_characters_procedure.rkt)
 
-### [Checkout the homeworks as well for the first week](../../solutions/SectionOne/1-ElementsOfProgramming/Barkeley-Exercises/hw-week1.md)
+### [Checkout the homeworks as well for the first week](../../solutions/SectionOne/Berkeley-Exercises/hw-week1.md)
