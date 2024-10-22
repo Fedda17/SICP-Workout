@@ -1,3 +1,6 @@
+# Week 3 Homework
+## Perfect Number Investigation
+### Part 1
 The exercise requires to find the next perfect number after 29 using a procedure
 
 ``` racket
@@ -21,6 +24,7 @@ The exercise requires to find the next perfect number after 29 using a procedure
 		(combiner (if (filter a) (term a) null-value) (filtered-accumulate filter null-value combiner term (next a) next b))))
 ```
 
+### Part 2
 > (next-perf 5)  
 6  
 > (next-perf 7)  
@@ -33,7 +37,7 @@ The answer is 496
 
 I have an indipendent computer so there's no need to check when the system is heavy loaded.
 
-Part 3: 
+## Part 3
 
 I have to describe what's the effect of changing the order of tests
 
@@ -107,6 +111,7 @@ I know that the evaluation of the cond expression stops when the interpreter fin
 ```
 </details>
 
+## Partition Procedure Investigation
 I'm confident enough to say that the set of different result is empty because the first condition doesn't depend on the second
 
 Procedure for a partitition of non-negative number:
@@ -126,12 +131,12 @@ Procedure for a partitition of non-negative number:
                 counter)))))
 ```
 
-Part 2:
+### Part 2
 If i describe number-of-partitions like the count-change procedure in the book:  
 the coins is a positive integer, the type of coins is the remaining partitions of the integer - 1.
 
 
-Part 3:
+### Part 3
 Write number-of-partitions in a way that the process will be tail recursive:
 
 ``` racket

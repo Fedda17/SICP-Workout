@@ -7,7 +7,7 @@ Define a procedure that takes three numbers as arguments and returns the sum of 
 ### Resolution
 After some misleading reasoning, I solved the problem by nesting a series of conditions to figure out which were the two largest numbers, and I used the power of language to apply the mathematical operations square and + to the result of the nested conditional expressions.
 ### [Thought Process](../../solutions/SectionOne/1-ElementsOfProgramming/SICP-Exercises/1.3.md)
-### [Source Code](../..//source_code/SectionOne/1-ElementsOfProgramming/1.3.rkt)
+### [Source Code](../../solutions/SectionOne/1-ElementsOfProgramming/resources/1.3.rkt)
 
 
 ## 1.4
@@ -104,6 +104,6 @@ The main draw from this exercise it's the importance of breking down the problem
 #### Resolution
 The first complex exercise I encountered studying the book that helped me to see the problem in solving a set of subproblems in order to tackle more complex compositions of procedural ideas, then I tested the procedures given the samples provided and adjusted it accordingly
 #### [Thought Process](../../solutions/SectionOne/1-ElementsOfProgramming/Barkeley-Exercises/remove-duplicates-characters.md)
-#### [Source code](../..//source_code/SectionOne/1-ElementsOfProgramming/remove_duplicates_characters_procedure.rkt)
+#### [Source code](../../solutions/SectionOne/1-ElementsOfProgramming/resources/remove_duplicates_characters_procedure.rkt)
 
-### [Checkout the homeworks as well for the first week](../../solutions/SectionOne/Berkeley-Exercises/hw-week1.md)
+### [Checkout the homeworks as well for the first week](../../solutions/Berkeley-Exercises/hw-week1.md)

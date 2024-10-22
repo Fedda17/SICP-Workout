@@ -1,5 +1,4 @@
-# Homework stuff
-
+# Week 2
 
 ## Finding further abstraction for procedures which need iteration and transformation of each element
 Rewriting the square procedure described on the paper in a more compact manner

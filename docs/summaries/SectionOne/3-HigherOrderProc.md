@@ -7,7 +7,7 @@ Simpson's Rule procedure definition and test with the cube one
 ### Resolution
 I used the definitions that the book gave to put all the elements together with a basic understanding of the concept of higher-order procedures.
 ### [Thought Process](../../solutions/SectionOne/3-HigherOrderProc/SICP-Exercises/1.29.md)
-### [Source Code](../..//source_code/SectionOne/3-HigherOrderProc/simpsons_rule.rkt)
+### [Source Code](../../solutions/SectionOne/3-HigherOrderProc/resources/simpsons_rule.rkt)
 
 
 ## 1.31
@@ -17,7 +17,7 @@ Exercise where I change the sum procedure provided in the book with a product on
 ### Resolution
 I used the definitions that the book gave to put all the elements together with a basic understanding of the concept of higher-order procedures. And studied the how the numerator and denominator develop in order to make some rules about them with k as an element of interest.
 ### [Thought Process](../../solutions/SectionOne/3-HigherOrderProc/SICP-Exercises/1.31.md)
-### [Source Code](../..//source_code/SectionOne/3-HigherOrderProc/simpsons_rule.rkt)
+### [Source Code](../../solutions/SectionOne/3-HigherOrderProc/resources/simpsons_rule.rkt)
 
 ## 1.32
 
@@ -74,7 +74,7 @@ Using the cont-frac procedure, I had to conjure a procedure for finding the eule
 ### Resolution
 This was tough, because I had to find a rule for estimating the correct value of the denominator based on the position in the series and I had to modify the previously defined cont-frac procedure because it wasn't correct in how the steps were ordered.
 ### [Thought Process](../../solutions/SectionOne/3-HigherOrderProc/SICP-Exercises/1.38.md)
-### [Source Code](../..//source_code/SectionOne/3-HigherOrderProc/euler-cont-frac.rkt)
+### [Source Code](../../solutions/SectionOne/3-HigherOrderProc/resources/euler-cont-frac.rkt)
 
 
 ## 1.39
@@ -84,7 +84,7 @@ Continued fraction to find the tangent of a number in radians.
 ### Resolution
 All the process was already laid out thanks to the previous exercises and the description found in the exercise text.
 ### [Thought Process](../../solutions/SectionOne/3-HigherOrderProc/SICP-Exercises/1.39.md)
-### [Source Code](../..//source_code/SectionOne/3-HigherOrderProc/tangent-cont-frac.rkt)
+### [Source Code](../../solutions/SectionOne/3-HigherOrderProc/resources/tangent-cont-frac.rkt)
 
 
 ## 1.40
@@ -94,7 +94,7 @@ Finding the zeros of a cubic equation using the newthon's method
 ### Resolution
 All the process was already laid out thanks to the previous exercises and the description found in the exercise text. Experimenting with an argument that has range a function in the main procedure.
 ### [Thought Process](../../solutions/SectionOne/3-HigherOrderProc/SICP-Exercises/1.40.md)
-### [Source Code](../..//source_code/SectionOne/3-HigherOrderProc/cubic.rkt)
+### [Source Code](../../solutions/SectionOne/3-HigherOrderProc/resources/cubic.rkt)
 
 ## 1.41
 
@@ -125,7 +125,7 @@ N-th root procedure using a criteria for getting approximations with repetition 
 ### Resolution
 After testing what was the hard wall for an average damping with progressive order of rooting, I tried to derive a rule that binds the order of root n and the number of average damping, then I tested and traced my steps back in order to make some revisions in the individual sub procedures
 ### [Thought Process](../../solutions/SectionOne/3-HigherOrderProc/SICP-Exercises/1.45.md)
-### [Source Code](../..//source_code/SectionOne/3-HigherOrderProc/nth-root.rkt)
+### [Source Code](../../solutions/SectionOne/3-HigherOrderProc/resources/nth-root.rkt)
 
 ## 1.46
 ### Description
@@ -139,5 +139,5 @@ Combined all the previously verified knowledge in these recent exercise I came u
 
 ### Resolution
 I'm glad I experimented more with lambda expressions
-### [Lab](../../solutions/SectionOne/Berkeley-Exercises/lab-week2.md)
-### [homework](../../solutions/SectionOne/Berkeley-Exercises/hw-week2.md)
+### [Lab](../../solutions/Berkeley-Exercises/lab-week2.md)
+### [homework](../../solutions/Berkeley-Exercises/hw-week2.md)

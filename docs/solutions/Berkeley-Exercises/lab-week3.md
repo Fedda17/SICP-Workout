@@ -1,4 +1,4 @@
-
+# Week 3 Lab
 ``` racket
 (define (count-change amount)
   (cc amount 5))
@@ -21,7 +21,7 @@
         ((= kinds-of-coins 4) 25)
         ((= kinds-of-coins 5) 50)))
 ```
-
+## Part 1
 They ask me to change the program in the first point so that the pennies are tried first, then dimes in two ways:
 
 First way:
@@ -74,7 +74,7 @@ Second way:
         ((= kinds-of-coins 1) 50)))
 ```
 
-Point 2:
+## Part 2
 Verify the correctness of the computation. I'll use trace for this. Change the call to restrict the changes only with pennies and nickles:
 
 Stack trace for the normal order:
@@ -301,7 +301,7 @@ I called the free variable kinds-of-coins in respect to invert-order and that ma
 I can see now why the chain of call is longer according to what the prof said.
 
 
-Part 3:
+## Part 3
 Revise cc so that accepts a sentence of kind of coins as an input instead of a number:
 
 ``` racket
@@ -326,8 +326,8 @@ Revise cc so that accepts a sentence of kind of coins as an input instead of a n
 
 This works.
 
-Part 4:
-type check procedure:
+## Part 4
+### type check procedure
 domain: predicate, a function and the data it takes
 range: the computed if the predicate returns true, otherwise false.
 

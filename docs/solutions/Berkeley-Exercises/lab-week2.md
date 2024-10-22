@@ -1,5 +1,4 @@
-# Lab's Stuff
-
+# Week 2 Lab
 
 ## Week 2, ex 3
 ``` racket
