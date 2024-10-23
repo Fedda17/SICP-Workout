@@ -17,10 +17,13 @@ In addition to the SICP exercises I'm also doing a course provided by Barkeley u
 Presenting to you the threading I did in order to make sense of the exercises in a portable way
 
 -------
-1.1 [Elements of Programming!](/summaries/SectionOne/1-ElementsOfProgramming)  
-1.2 [Common Patterns of Processes!](/summaries/SectionOne/2-CommonProcessPatterns)  
-1.3 [Further Abstractions with Higher order procedures!](/summaries/SectionOne/3-HigherOrderProc)  
+1.1 [Elements of Programming!](./summaries/SectionOne/1-ElementsOfProgramming.md)  
+1.2 [Common Patterns of Processes!](./summaries/SectionOne/2-CommonProcessPatterns.md)  
+1.3 [Further Abstractions with Higher order procedures!](./summaries/SectionOne/3-HigherOrderProc.md)  
 
 Project 1: [Blackjack game](./solutions/barkeley-project-1/Project_Section1_Barkeley.md)
 
 --------
+
+2.1 [Introduction to Data Abstraction!](./summaries/SectionTwo/1-IntroToDataAbstraction.md)  
+2.2 [Hierarchical Structures and Closure Property!](./summaries/SectionTwo/2-HierarcData.md)  
