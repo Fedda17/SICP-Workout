@@ -1,0 +1,26 @@
+An extension of the previous exercise. Put an abstraction barrier to the map-recursive definition approach on trees structures:
+Example: 
+ (define (square-tree tree)
+(tree-map square tree))
+
+(define (tree-map op tree)
+    (map (lambda (sub-tree) (if (pair? sub-tree) (tree-map op sub-tree) (op tree))) tree)
+)
+
+
+I use this definition to re-do the previous exercise:
+
+(define (square-tree tree)
+    (tree-map (lambda (x) (* x x)) tree))
+
+TEST RESULT --- NEGATIVE
+*: contract violation
+  expected: number?
+  given: '(1 (2 (3 4) 5) (6 7))
+
+Well, where did it go wrong....
+
+I put the wrong variable tree->sub-tree:
+(define (tree-map op tree)
+    (map (lambda (sub-tree) (if (pair? sub-tree) (tree-map op sub-tree) (op sub-tree))) tree)
+)

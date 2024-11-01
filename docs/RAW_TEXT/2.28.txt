@@ -1,0 +1,48 @@
+This exercise asks me to build a procedure that given a tree represented by lists, it returns the leaves in the left-right order.
+Let's assume I know nothing about sequence operations.
+
+Example:
+(define x 
+  (list (list 1 2) (list 3 4)))
+
+(fringe x)
+(1 2 3 4)
+
+(fringe (list x x))
+(1 2 3 4 1 2 3 4)
+
+I take inspiration from the count-leaves procedure:
+
+(define (count-leaves x)
+  (cond ((null? x) 0)
+        ((not (pair? x)) 1)
+        (else (+ (count-leaves (car x))
+                 (count-leaves (cdr x))))))
+
+
+(define (fringe x)
+  (cond ((null? x) '() )
+        ((not (pair? x)) x)
+        (else (cons (fringe (car x))
+                 (fringe (cdr x))))))
+
+TEST RESULT --- NEGATIVE 
+>(fringe x)
+
+((1 2) (3 4))
+it just returns the tree because cons makes the structure of the tree again
+
+(define (fringe x)
+  (cond ((null? x) '() )
+        ((not (pair? x)) (list x))
+        (else (append (fringe (car x))
+                 (fringe (cdr x))))))
+
+TEST RESULT --- POSITIVE
+(fringe x)
+'(1 2 3 4)
+
+test with (list x x)
+TEST RESULT --- POSITIVE
+(fringe (list x x))
+'(1 2 3 4 1 2 3 4)

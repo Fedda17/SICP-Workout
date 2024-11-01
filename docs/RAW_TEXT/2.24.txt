@@ -1,0 +1,14 @@
+This exercise asks me to evaluate figuratively using the box and pointer notation and then a tree the expression (list 1 (list 2 (list 3 4)))
+Also I have to imagine what the interpreter will print:
+
+hypothesis:
+(1 (2 (3 4)))
+(list a b) = (cons a (cons b nil))
+so the expression should be in cons
+(cons 1 (cons (cons 2 (cons (cons 3 (cons 4 nil)) nil)) nil))
+
+box-and-pointer structure:
+ADD PHOTO
+
+tree:
+ADD PHOTO
