@@ -52,8 +52,7 @@ Third attempt:
 (let ((rest (subsets (cdr s))))
 (append rest (map (lambda (x) (cons (car s) x)) rest)))))
 
-This works! Why does it work? Well I tested that the let variable is enough for generating all the numbers of set permutations, then it was a matter to
+This works! Why does it work? Well I tested that the let variable is enough for generating all the numbers of set permutations with append, then it was a matter to
 find the right transformation at each recursive call. I imagined something to do an inverse intersection if it makes sense. But I couldn't quite grasp how to do it procedurally, hence the cons intuition.
-It sparked that I didn't use the map with its intended meaning so I put x as the cdr of the couple and the procedure is correct, thinking about it a little bit:
-At each call I pick the first element of the set and join them together with each remaining elements of the remaining elements. The recursive call each time subtracts an element at the beginning and generates a permutation. Soooo...
+It sparked that I didn't use the map with its intended meaning so I put x as the cdr of the couple and the procedure is correct, thinking about it a little bit. Soooo...
 at each call the procedure picks the last element and form a permutation, then it picks the second last and joins it with the permutations of the previously generated set and does this recursively until it meets the first element.

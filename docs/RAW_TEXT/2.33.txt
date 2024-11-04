@@ -1,0 +1,50 @@
+This exercise asks me to complete these procedures:
+
+(define (map p sequence)
+    (accumulate (lambda (x y) ⟨??⟩)
+    nil sequence))
+
+(define (append seq1 seq2)
+    (accumulate cons ⟨??⟩ ⟨??⟩))
+
+(define (length sequence)
+    (accumulate ⟨??⟩ 0 sequence))
+
+
+All list operations defined mutually by accumulate
+
+
+(define (accumulate op initial sequence)
+    (if (null? sequence)
+        initial
+        (op (car sequence)
+            (accumulate op
+                    initial
+                    (cdr sequence)))))
+
+For Map, I have to apply an operation at each element and return the list with the transformed elements:
+
+(define (map p sequence)
+    (accumulate (lambda (x y) (cons (p x) y))
+    '() sequence))
+
+TEST RESULT --- AFFIRMATIVE
+(map (lambda (x) (* x x)) (list 1 2 3 4 5))
+'(1 4 9 16 25)
+
+For append, I have to unite the second list onto the first one into a list.
+
+(define (append seq1 seq2)
+    (accumulate cons seq2 seq1))
+
+TEST RESULT --- AFFIRMATIVE
+(append (list 1 2 3 4 5) (list 6 7 8 1 2))
+'(1 2 3 4 5 6 7 8 1 2)
+
+For length, at each element I count one:
+(define (length sequence)
+    (accumulate (lambda (x y) (+ 1 y)) 0 sequence))
+
+TEST RESULT --- AFFIRMATIVE 
+(length (list 1 2 3 4 5))
+5
