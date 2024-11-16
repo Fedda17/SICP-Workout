@@ -1,0 +1,34 @@
+This exercise asks me to complete the following procedures:
+
+(define (reverse sequence)
+    (fold-right (lambda (x y) ⟨??⟩) nil sequence))
+(define (reverse sequence)
+    (fold-left (lambda (x y) ⟨??⟩) nil sequence))
+
+(define (reverse sequence)
+    (fold-right (lambda (x y) (append y (list x))) '() sequence))
+(define (reverse sequence)
+    (fold-left (lambda (x y) (append (list x) y)) '() sequence))
+
+TEST RESULT --- NEGATIVE
+(reverse (list 1 2 3 4)) for fold-left
+'((((() . 1) . 2) . 3) . 4)
+
+RETRY
+(define (reverse sequence)
+    (fold-left (lambda (x y) (cons x y)) '() sequence))
+
+TEST RESULT --- NEGATIVE
+> (reverse (list 1 2 3 4))
+'((((() . 1) . 2) . 3) . 4)
+
+
+(define (reverse sequence)
+    (fold-left (lambda (x y) (cons y x)) '() sequence))
+
+TEST RESULT --- POSITIVE 
+(reverse (list 1 2 3 4))
+'(4 3 2 1)
+
+this aggregates elements by stacking it at the bottom like a traditional cons by recursive call does a list.
+
