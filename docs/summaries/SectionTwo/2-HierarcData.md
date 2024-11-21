@@ -184,3 +184,18 @@ Build sets that satisfy a property by transforming them from the input
 Was fun to combine list operation modularly to see sequences going into various transformation until the end goal is met. 
 ### [Thought Process](../../solutions/SectionTwo/2-HierarcData/SICP-Exercises/2.41.md)
 ### [Source Code](../../solutions/SectionTwo/2-HierarcData/resources/sum-triplets.rkt)
+
+## 2.42
+### Description
+Solve queen puzzle using data abstraction and sequence operations
+### Resolution
+What a tough exercise, mostly about computational skill and seeing a scheme in the position of the queen but a fun way to summarize the topics discussed in the chapter.
+### [Thought Process](../../solutions/SectionTwo/2-HierarcData/SICP-Exercises/2.42.md)
+### [Source Code](../../solutions/SectionTwo/2-HierarcData/resources/queen-puzzle.rkt)
+
+## 2.43
+### Description
+Little change, big problem (regarding Queen puzzle)
+### Resolution
+An exercise that flexed my skill to think about resource usage regarding a very abstracted operations.
+### [Thought Process](../../solutions/SectionTwo/2-HierarcData/SICP-Exercises/2.43.md)
