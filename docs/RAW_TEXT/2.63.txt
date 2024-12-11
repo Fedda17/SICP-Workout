@@ -1,0 +1,96 @@
+How these 2 procedures differ in building lists from trees nodes?
+
+(define (tree->list-1 tree)
+  (if (null? tree)
+      '()
+      (append 
+       (tree->list-1 
+        (left-branch tree))
+       (cons (entry tree)
+             (tree->list-1 
+              (right-branch tree))))))
+
+(define (tree->list-2 tree)
+  (define (copy-to-list tree result-list)
+    (if (null? tree)
+        result-list
+        (copy-to-list 
+         (left-branch tree)
+         (cons (entry tree)
+               (copy-to-list 
+                (right-branch tree)
+                result-list)))))
+  (copy-to-list tree '()))
+
+  Doesn't append abstract copy-to-list? I have to try the procedure with some inputs.
+
+  '(7 (3 (1) (5)) (9 (11)))
+
+
+  Let's try it with the substitution model:
+
+  (tree->list-1   '(7 (3 (1) (5)) (9 (11))))
+  ->(append (tree->list-1 (left-branch   '(7 (3 (1) (5)) (9 (11)))))
+      (cons (entry '(7 (3 (1) (5)) (9 (11)))) (tree->list-1 (right-branch '(7 (3 (1) (5)) (9 (11)))))))
+  ->(append '(1 3 5) '(7 9 11))
+  '(1 3 5 7 9 11)
+
+  -->(tree->list-1 '(3 (1) (5)))
+    (append (tree->list-1 (left-branch '(3 (1) (5)))) (cons (entry '(3 (1) (5))) (tree->list1 (right-branch '(3 (1) (5))))))
+    (append '(1) '(3 5))
+    -> (tree->list-1 '(1))
+      (append '() (cons 1 '()))
+
+--> (tree->list-1 '(9 ( 11)))
+    (append (left-branch '(9 (11))) (cons (entry '(9 (11))) (tree->list-1 (right-branch '(9 (11))))))
+    -> (append '() (cons 9 (tree->list-1 '(11))))
+    ->(append '() (cons 11 '()))
+
+
+(tree->list-2   '(7 (3 (1) (5)) (9 (11))))
+->(copy-to-list '(7 (3 (1) (5)) (9 (11))) '())
+->(copy-to-list (left-branch '(7 (3 (1) (5)) (9 (11))))
+                 (cons 
+                      (entry '(7 (3 (1) (5)) (9 (11)))) 
+                      (copy-to-list 
+                        (right-branch '(7 (3 (1) (5)) (9 (11)))) 
+                        result-list)))
+->(copy-to-list '(3 (1) (5)) '(7 9 11))
+
+-->(copy-to-list '(9 (11)) '())
+  ->(copy-to-list '() (cons 9 (copy-to-list '(11) '())))->'(9 11)
+  ->(copy-to-list '(11) '())
+    (copy-to-list '() (cons 11 (copy-to-list '() '())))
+    ->(copy-to-list '() '(11)) ->'(11)
+
+-->(copy-to-list '(3 (1) (5)) '(7 9 11))
+(copy-to-list '(1) '(3 5 7 9 11))->'(1 3 5 7 9 11)
+->(copy-to-list '(5) '(7 9 11))
+->(copy-to-list '() '(5 7 9 11))
+
+
+For the first tree the output is equal.
+For the second one is equal, and it's likely equal to the first tree.
+For the third one is equal, and it's likely equal to the second and first three. So all the results are equals for both functions.
+
+For the second point:
+First and third three are balanced, so I only pick one to measure time, and I compare it to the second one.
+
+These are some logs, I can't obtain good measurements to say the difference between the two procedures with balanced and unbalanced trees with library function and frankly I lost interest in this exercise.
+
+(time-apply tree->list-2 (list (make-tree 3 (make-tree 1 '() '()) (make-tree 7 (make-tree 5 '() '()) (make-tree 9 '() (make-tree 11 '() '()))))))
+'((1 3 5 7 9 11))
+0
+0
+0
+(make-tree 5 '() '())) (make-tree 9 '() (make-tree 11 '() '())))))
+'((1 3 5 7 9 11))
+0
+0
+0
+
+ (time-apply tree->list-1 (list (make-tree 7 (make-tree 3 (make-tree 1 '() '()) (make-tree 5 '() '())) (make-tree 9 '() (make-tree 11 '() '())))))
+'((1 3 5 7 9 11))
+0
+0
+0

@@ -1,0 +1,25 @@
+I have to implement the union-set for unordered lists.
+Given to set, the union of them is the set of the elements in the two lists.
+So I guess I'll just use append:
+(define (union-set x y)  (append x y))
+
+This won't work because the set will have duplicates.
+Let's try this way:
+
+(define (element-of-set? x set)
+  (cond ((null? set) #f)
+        ((equal? x (car set)) #t)
+        (else (element-of-set? x (cdr set)))))
+
+(define (union-set x y)
+        (cond 
+            ((null? x) y)
+            ((not (element-of-set? (car x) y)) (cons (car x) (union-set (cdr x) y)))
+            (else (union-set (cdr x) y))
+        )
+ )
+
+
+TEST RESULT --- AFFIRMATIVE
+(union-set (list 3 2 1) (list 2 5 9))
+'(3 1 2 5 9)

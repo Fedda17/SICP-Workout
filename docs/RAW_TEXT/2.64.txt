@@ -1,0 +1,48 @@
+For this exercise I have to write a thesis on how this procedure works:
+
+(define (partial-tree elts n)
+  (if (= n 0)
+      (cons '() elts)
+      (let ((left-size 
+             (quotient (- n 1) 2)))
+        (let ((left-result 
+               (partial-tree 
+                elts left-size)))
+          (let ((left-tree 
+                 (car left-result))
+                (non-left-elts 
+                 (cdr left-result))
+                (right-size 
+                 (- n (+ left-size 1))))
+            (let ((this-entry 
+                   (car non-left-elts))
+                  (right-result 
+                   (partial-tree 
+                    (cdr non-left-elts)
+                    right-size)))
+              (let ((right-tree 
+                     (car right-result))
+                    (remaining-elts 
+                     (cdr right-result)))
+                (cons (make-tree this-entry 
+                                 left-tree 
+                                 right-tree)
+                      remaining-elts))))))))
+
+I know that partial-tree returns a pair with the car the tree and the cdr the remaining elements.
+So if n = 0 the tree is empty and the cons will be empty tree in car and cdr all the elements.
+
+First it divides the element in a balanced way for every subtrees for n, it saves elements for the right branch putting them into a list variable and 
+does the same for the right size. When it has both the right size and the left size and the entry, it builds a node by dividing the list each time into two groups for every node.
+
+The tree generated with the list '(1 3 5 7 9 11), which is already ordered is '(5 (1 () (3 () ())) (9 (7 () ()) (11 () ()))). That if I have to draw is something like:
+5->1
+    ->3
+ ->9->7
+    ->11
+
+(Up = left, Down = right) 
+
+I think the order of growth is tetha n, the next exercise indicated that. For the tree to be constructed it's important that the procedure puts in order every element of the list by selecting a chunk of them for every sub-tree.
+Despite this suggesting a logarithmic runtime, every element must still be put in place.
+

@@ -1,0 +1,43 @@
+I have to give an implementation for adjoin-set that takes advantage of the ordered representation.
+
+
+(define (element-of-set? x set)
+  (cond ((null? set) false)
+        ((= x (car set)) true)
+        ((< x (car set)) false)
+        (else (element-of-set? x (cdr set)))))
+
+
+(define (adjoin-set x set)
+    (cond ((null? set) (cons x set))
+            ((>= x (cadr set)) (cons x set))
+            (else (cons (car set) (adjoin-set x (cdr set))))
+    )
+)
+
+TEST RESULT --- Negative
+cadr: contract violation
+  expected: (cons/c any/c pair?)
+  given: '(4)
+
+The adjoin-set implementation doesn't respect the chosen order of representation.
+
+(define (adjoin-set x set)
+    (cond ((null? set) (cons x set))
+            ((= x (car set))  (adjoin-set x (cdr set)))
+            ((< x (car set)) (cons x set))
+            (else (cons (car set) (adjoin-set x (cdr set))))
+    )
+)
+
+
+TEST RESULT --- AFFIRMATIVE
+>  (adjoin-set 1 (list 2 3 4))
+'(1 2 3 4)
+>  (adjoin-set 2 (list 2 3 4))
+'(2 3 4)
+>  (adjoin-set 2 (list 2))
+'(2)
+>  (adjoin-set 1 (list 2))
+'(1 2)
+> 

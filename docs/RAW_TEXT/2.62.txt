@@ -1,0 +1,23 @@
+Union set for ordered lists with Thetha(n) runtime.
+
+(define (union-set set1 set2)
+    (cond ((or (null? set2) (null? set1)) (append set1 set2))
+            ((= (car set2) (car set1))  (cons (car set1) (union-set (cdr set1) (cdr set2))))
+            ((< (car set2) (car set1)) (cons (car set2) (union-set set1 (cdr set2))))
+            (else (cons (car set1) (union-set (cdr set1)  set2)))
+    )
+)
+
+TEST RESULT --- AFFIRMATIVE
+
+> (union-set (list 1 2 3 4) (list 5 6 7 8))
+'(1 2 3 4 5 6 7 8)
+> (union-set (list 5 6 10 13) (list 5 9 10 11))
+'(5 6 9 10 11 13)
+> 
+
+Is it a n runtime implementation? The number of steps will grow in these cases:
+1. cdr down the two sets
+2. Accumulate cons operations that are proportional to the number of elements in the sets.
+
+So roughly the number of steps will be 4n which have an order of growth of thetha n.

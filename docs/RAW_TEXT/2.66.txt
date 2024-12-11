@@ -1,0 +1,17 @@
+Lookup procedure to look into a database, but each record is a datum for a binary tree ordered by the numeral key of the entry.
+
+So I just have to search into this binary tree monkeying element-of-set? for binary tree, gaining a logarithmic runtime advantage.
+And using a guide the lookup procedure defined as an example in the book.
+
+
+(define (lookup looked-key records)
+  (cond ((null? records) false)
+        ((= looked-key (key (entry records)) (entry records))
+        ((< looked-key (key (entry records)))
+         (lookup 
+          looked-key 
+          (left-branch records)))
+        ((> looked-key (key (entry records))
+         (lookup 
+          looked-key
+          (right-branch records)))))
