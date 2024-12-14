@@ -20,3 +20,8 @@ If sets are represented by normal lists, how this affect the performance of the 
 
 The main takeway is that it's the resource of space increase with this representation, but the numbers of steps for elements-of-set and intersection-set is the same, adjoin-set is constant time. union-set is n time.
 I don't have in mind applications for which representation would be more convenient over the one that doesn't admit duplicates, but I think it will depend how the system depends on adjoin-set and union-set?
+
+This solution suggests a "log application"
+https://github.com/kana/sicp/blob/master/ex-2.60.scm
+
+But I think that at that point a set representation can be misleading. Why? Well, why would I have to use stuff like intersection-set on logs?

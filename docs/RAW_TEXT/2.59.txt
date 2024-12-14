@@ -23,3 +23,9 @@ Let's try this way:
 TEST RESULT --- AFFIRMATIVE
 (union-set (list 3 2 1) (list 2 5 9))
 '(3 1 2 5 9)
+
+
+This solution syntatically is the same but uses adjoin-set and not cons for building the new set:
+https://www.timwoerner.de/posts/sicp/exercises/2/59/
+
+The conceptual level becomes more clear, but I think that I'm still at the same level of abstraction that using cons doesn't compromise the abstraction barrier.

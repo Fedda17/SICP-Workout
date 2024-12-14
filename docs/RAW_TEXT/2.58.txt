@@ -202,5 +202,36 @@ I GIVE UP FOR NOW
 Starting from this exercise, at the end of each section, I'll look up for solutions online. Not only to get unstuck in problems I couldn't solve, but also for gaining new insights and
 getting into the creative side of programming more, in fact programming doesn't exist in a void and it's cool for study as well.
 
+I like this solution a lot:
+https://www.timwoerner.de/posts/sicp/exercises/2/58/
 
-  EXPORT TO FILE
+because it uses cond in a clever way to establish an order of operation.
+
+this is the list-head operation that the blog mentions.
+(define (list-head lst item)
+  (cond ((null? lst) '())                              
+        ((eq? (car lst) item) '())                    
+        (else (cons (car lst) (list-head (cdr lst) item))))) 
+
+I have to make smaller adjustments to make the logic described work, for multiplicand and augend:
+
+(define (augend s)
+  (let ((a (cdr (memq '+ s))))
+  (if (atomic? a) (car a) a)))
+
+(define (multiplicand p)
+  (let ((m (cdr (memq '* p))))
+  (if (atomic? m) (car m) m)))
+
+
+Let's test if the solution first works!
+
+It works for this expression:
+> (deriv '(x + 3 * (x + y + 2)) 'x)
+4
+
+Even if I make the inverse order it works:
+> (deriv '((x + y + 2) * 3 + x) 'x)
+4
+
+Tim Julian Wörner takes the credit for this solution
